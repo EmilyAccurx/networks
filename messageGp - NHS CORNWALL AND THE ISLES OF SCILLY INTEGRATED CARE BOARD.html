@@ -1,0 +1,164 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 600px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body><h1 style='text-align:center;'>MessageGp - NHS CORNWALL AND THE ISLES OF SCILLY INTEGRATED CARE BOARD</h1>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "green", "id": "COPPERHOUSE PHARMACY", "label": "", "shape": "dot", "size": 49, "title": "COPPERHOUSE PHARMACY"}, {"color": "orange", "id": "Rushall Medical Centre", "label": "", "shape": "dot", "size": 5, "title": "Rushall Medical Centre"}, {"color": "orange", "id": "Leatside Health Centre", "label": "", "shape": "dot", "size": 5, "title": "Leatside Health Centre"}, {"color": "orange", "id": "Chacewater Health Centre", "label": "", "shape": "dot", "size": 5, "title": "Chacewater Health Centre"}, {"color": "orange", "id": "Carn to Coast Health Centres", "label": "", "shape": "dot", "size": 5, "title": "Carn to Coast Health Centres"}, {"color": "orange", "id": "Harris Memorial Surgery", "label": "", "shape": "dot", "size": 5, "title": "Harris Memorial Surgery"}, {"color": "orange", "id": "St Austell Healthcare", "label": "", "shape": "dot", "size": 5, "title": "St Austell Healthcare"}, {"color": "orange", "id": "Veor Surgery", "label": "", "shape": "dot", "size": 5, "title": "Veor Surgery"}, {"color": "orange", "id": "Perranporth Surgery", "label": "", "shape": "dot", "size": 5, "title": "Perranporth Surgery"}, {"color": "orange", "id": "Lennard Surgery", "label": "", "shape": "dot", "size": 5, "title": "Lennard Surgery"}, {"color": "orange", "id": "Bodriggy Health Centre", "label": "", "shape": "dot", "size": 5, "title": "Bodriggy Health Centre"}, {"color": "orange", "id": "Brimington Surgery", "label": "", "shape": "dot", "size": 5, "title": "Brimington Surgery"}, {"color": "green", "id": "ROYAL CORNWALL HOSPITALS NHS TRUST", "label": "", "shape": "dot", "size": 93, "title": "ROYAL CORNWALL HOSPITALS NHS TRUST"}, {"color": "orange", "id": "Fowey River Practice", "label": "", "shape": "dot", "size": 5, "title": "Fowey River Practice"}, {"color": "orange", "id": "Brunel Medical Practice", "label": "", "shape": "dot", "size": 5, "title": "Brunel Medical Practice"}, {"color": "orange", "id": "Meneage Street Surgery", "label": "", "shape": "dot", "size": 5, "title": "Meneage Street Surgery"}, {"color": "orange", "id": "Godolphin Health", "label": "", "shape": "dot", "size": 5, "title": "Godolphin Health"}, {"color": "orange", "id": "The Penryn Surgery", "label": "", "shape": "dot", "size": 5, "title": "The Penryn Surgery"}, {"color": "orange", "id": "Westover Surgery", "label": "", "shape": "dot", "size": 5, "title": "Westover Surgery"}, {"color": "orange", "id": "Neetside Surgery", "label": "", "shape": "dot", "size": 5, "title": "Neetside Surgery"}, {"color": "orange", "id": "Mevagissey", "label": "", "shape": "dot", "size": 5, "title": "Mevagissey"}, {"color": "orange", "id": "Newtown Medical Practice", "label": "", "shape": "dot", "size": 5, "title": "Newtown Medical Practice"}, {"color": "orange", "id": "Lander Medical Practice", "label": "", "shape": "dot", "size": 5, "title": "Lander Medical Practice"}, {"color": "orange", "id": "The Three Spires Medical Practice", "label": "", "shape": "dot", "size": 5, "title": "The Three Spires Medical Practice"}, {"color": "orange", "id": "Lostwithiel Medical Practice", "label": "", "shape": "dot", "size": 5, "title": "Lostwithiel Medical Practice"}, {"color": "orange", "id": "The Falmouth Health Centre Practice", "label": "", "shape": "dot", "size": 5, "title": "The Falmouth Health Centre Practice"}, {"color": "orange", "id": "Probus Surgery", "label": "", "shape": "dot", "size": 5, "title": "Probus Surgery"}, {"color": "orange", "id": "Mullion and Constantine Group Practice", "label": "", "shape": "dot", "size": 5, "title": "Mullion and Constantine Group Practice"}, {"color": "orange", "id": "Old Bridge Surgery", "label": "", "shape": "dot", "size": 5, "title": "Old Bridge Surgery"}, {"color": "orange", "id": "Narrowcliff Surgery", "label": "", "shape": "dot", "size": 5, "title": "Narrowcliff Surgery"}, {"color": "orange", "id": "Atlantic Medical Group", "label": "", "shape": "dot", "size": 5, "title": "Atlantic Medical Group"}, {"color": "orange", "id": "Camelford Medical Centre (Veor)", "label": "", "shape": "dot", "size": 5, "title": "Camelford Medical Centre (Veor)"}]);
+                  edges = new vis.DataSet([{"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "COPPERHOUSE PHARMACY", "title": "Messages: 1.0", "to": "Rushall Medical Centre", "width": 1}, {"TOT_MESSAGES": 5.0, "arrows": "to", "color": "rgba(102.0, 0, 153.0, 0.7)", "from": "COPPERHOUSE PHARMACY", "title": "Messages: 5.0", "to": "Leatside Health Centre", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "COPPERHOUSE PHARMACY", "title": "Messages: 1.0", "to": "Chacewater Health Centre", "width": 1}, {"TOT_MESSAGES": 4.0, "arrows": "to", "color": "rgba(76.5, 0, 178.5, 0.7)", "from": "COPPERHOUSE PHARMACY", "title": "Messages: 4.0", "to": "Carn to Coast Health Centres", "width": 1}, {"TOT_MESSAGES": 5.0, "arrows": "to", "color": "rgba(102.0, 0, 153.0, 0.7)", "from": "COPPERHOUSE PHARMACY", "title": "Messages: 5.0", "to": "Harris Memorial Surgery", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "COPPERHOUSE PHARMACY", "title": "Messages: 1.0", "to": "St Austell Healthcare", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "COPPERHOUSE PHARMACY", "title": "Messages: 1.0", "to": "Veor Surgery", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "COPPERHOUSE PHARMACY", "title": "Messages: 1.0", "to": "Perranporth Surgery", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "COPPERHOUSE PHARMACY", "title": "Messages: 1.0", "to": "Lennard Surgery", "width": 1}, {"TOT_MESSAGES": 11.0, "arrows": "to", "color": "rgba(255.0, 0, 0.0, 0.7)", "from": "COPPERHOUSE PHARMACY", "title": "Messages: 11.0", "to": "Bodriggy Health Centre", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "COPPERHOUSE PHARMACY", "title": "Messages: 1.0", "to": "Brimington Surgery", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "ROYAL CORNWALL HOSPITALS NHS TRUST", "title": "Messages: 1.0", "to": "Fowey River Practice", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "ROYAL CORNWALL HOSPITALS NHS TRUST", "title": "Messages: 1.0", "to": "Brunel Medical Practice", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "ROYAL CORNWALL HOSPITALS NHS TRUST", "title": "Messages: 1.0", "to": "Bodriggy Health Centre", "width": 1}, {"TOT_MESSAGES": 2.0, "arrows": "to", "color": "rgba(25.5, 0, 229.5, 0.7)", "from": "ROYAL CORNWALL HOSPITALS NHS TRUST", "title": "Messages: 2.0", "to": "Meneage Street Surgery", "width": 1}, {"TOT_MESSAGES": 2.0, "arrows": "to", "color": "rgba(25.5, 0, 229.5, 0.7)", "from": "ROYAL CORNWALL HOSPITALS NHS TRUST", "title": "Messages: 2.0", "to": "Godolphin Health", "width": 1}, {"TOT_MESSAGES": 3.0, "arrows": "to", "color": "rgba(51.0, 0, 204.0, 0.7)", "from": "ROYAL CORNWALL HOSPITALS NHS TRUST", "title": "Messages: 3.0", "to": "Harris Memorial Surgery", "width": 1}, {"TOT_MESSAGES": 4.0, "arrows": "to", "color": "rgba(76.5, 0, 178.5, 0.7)", "from": "ROYAL CORNWALL HOSPITALS NHS TRUST", "title": "Messages: 4.0", "to": "Chacewater Health Centre", "width": 1}, {"TOT_MESSAGES": 4.0, "arrows": "to", "color": "rgba(76.5, 0, 178.5, 0.7)", "from": "ROYAL CORNWALL HOSPITALS NHS TRUST", "title": "Messages: 4.0", "to": "The Penryn Surgery", "width": 1}, {"TOT_MESSAGES": 4.0, "arrows": "to", "color": "rgba(76.5, 0, 178.5, 0.7)", "from": "ROYAL CORNWALL HOSPITALS NHS TRUST", "title": "Messages: 4.0", "to": "Westover Surgery", "width": 1}, {"TOT_MESSAGES": 6.0, "arrows": "to", "color": "rgba(127.5, 0, 127.5, 0.7)", "from": "ROYAL CORNWALL HOSPITALS NHS TRUST", "title": "Messages: 6.0", "to": "Neetside Surgery", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "ROYAL CORNWALL HOSPITALS NHS TRUST", "title": "Messages: 1.0", "to": "Mevagissey", "width": 1}, {"TOT_MESSAGES": 2.0, "arrows": "to", "color": "rgba(25.5, 0, 229.5, 0.7)", "from": "ROYAL CORNWALL HOSPITALS NHS TRUST", "title": "Messages: 2.0", "to": "Newtown Medical Practice", "width": 1}, {"TOT_MESSAGES": 2.0, "arrows": "to", "color": "rgba(25.5, 0, 229.5, 0.7)", "from": "ROYAL CORNWALL HOSPITALS NHS TRUST", "title": "Messages: 2.0", "to": "Lander Medical Practice", "width": 1}, {"TOT_MESSAGES": 6.0, "arrows": "to", "color": "rgba(127.5, 0, 127.5, 0.7)", "from": "ROYAL CORNWALL HOSPITALS NHS TRUST", "title": "Messages: 6.0", "to": "The Three Spires Medical Practice", "width": 1}, {"TOT_MESSAGES": 4.0, "arrows": "to", "color": "rgba(76.5, 0, 178.5, 0.7)", "from": "ROYAL CORNWALL HOSPITALS NHS TRUST", "title": "Messages: 4.0", "to": "Lostwithiel Medical Practice", "width": 1}, {"TOT_MESSAGES": 8.0, "arrows": "to", "color": "rgba(178.5, 0, 76.50000000000001, 0.7)", "from": "ROYAL CORNWALL HOSPITALS NHS TRUST", "title": "Messages: 8.0", "to": "The Falmouth Health Centre Practice", "width": 1}, {"TOT_MESSAGES": 10.0, "arrows": "to", "color": "rgba(229.5, 0, 25.499999999999993, 0.7)", "from": "ROYAL CORNWALL HOSPITALS NHS TRUST", "title": "Messages: 10.0", "to": "Probus Surgery", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "ROYAL CORNWALL HOSPITALS NHS TRUST", "title": "Messages: 1.0", "to": "Mullion and Constantine Group Practice", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "ROYAL CORNWALL HOSPITALS NHS TRUST", "title": "Messages: 1.0", "to": "Old Bridge Surgery", "width": 1}, {"TOT_MESSAGES": 5.0, "arrows": "to", "color": "rgba(102.0, 0, 153.0, 0.7)", "from": "ROYAL CORNWALL HOSPITALS NHS TRUST", "title": "Messages: 5.0", "to": "Narrowcliff Surgery", "width": 1}, {"TOT_MESSAGES": 2.0, "arrows": "to", "color": "rgba(25.5, 0, 229.5, 0.7)", "from": "ROYAL CORNWALL HOSPITALS NHS TRUST", "title": "Messages: 2.0", "to": "Atlantic Medical Group", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "ROYAL CORNWALL HOSPITALS NHS TRUST", "title": "Messages: 1.0", "to": "Camelford Medical Centre (Veor)", "width": 1}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "forceAtlas2Based": {
+            "avoidOverlap": 0,
+            "centralGravity": 0.01,
+            "damping": 0.4,
+            "gravitationalConstant": -50,
+            "springConstant": 0.08,
+            "springLength": 100
+        },
+        "solver": "forceAtlas2Based",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

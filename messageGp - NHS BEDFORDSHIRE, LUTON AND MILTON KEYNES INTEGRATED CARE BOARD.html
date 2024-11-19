@@ -1,0 +1,164 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 600px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body><h1 style='text-align:center;'>MessageGp - NHS BEDFORDSHIRE, LUTON AND MILTON KEYNES INTEGRATED CARE BOARD</h1>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "green", "id": "CALVERTON PHARMACY", "label": "", "shape": "dot", "size": 29, "title": "CALVERTON PHARMACY"}, {"color": "orange", "id": "Neville Road Surgery", "label": "", "shape": "dot", "size": 5, "title": "Neville Road Surgery"}, {"color": "orange", "id": "Woodland Avenue Practice", "label": "", "shape": "dot", "size": 5, "title": "Woodland Avenue Practice"}, {"color": "orange", "id": "Oakley Surgery", "label": "", "shape": "dot", "size": 5, "title": "Oakley Surgery"}, {"color": "orange", "id": "Kingsway \u0026 Bramingham Medical Centre", "label": "", "shape": "dot", "size": 5, "title": "Kingsway \u0026 Bramingham Medical Centre"}, {"color": "orange", "id": "Gardenia Practice", "label": "", "shape": "dot", "size": 5, "title": "Gardenia Practice"}, {"color": "orange", "id": "Castle Medical Practice", "label": "", "shape": "dot", "size": 5, "title": "Castle Medical Practice"}, {"color": "green", "id": "CARERX", "label": "", "shape": "dot", "size": 41, "title": "CARERX"}, {"color": "orange", "id": "The Medici Medical Practice", "label": "", "shape": "dot", "size": 5, "title": "The Medici Medical Practice"}, {"color": "orange", "id": "Lea Vale Medical Group", "label": "", "shape": "dot", "size": 5, "title": "Lea Vale Medical Group"}, {"color": "orange", "id": "Bancroft Medical Centre - Courtenay House", "label": "", "shape": "dot", "size": 5, "title": "Bancroft Medical Centre - Courtenay House"}, {"color": "orange", "id": "Larkside Practice", "label": "", "shape": "dot", "size": 5, "title": "Larkside Practice"}, {"color": "orange", "id": "Stopsley Village Practice", "label": "", "shape": "dot", "size": 5, "title": "Stopsley Village Practice"}, {"color": "orange", "id": "Barton Hills Medical Group", "label": "", "shape": "dot", "size": 5, "title": "Barton Hills Medical Group"}, {"color": "orange", "id": "Priory Gate Practice", "label": "", "shape": "dot", "size": 5, "title": "Priory Gate Practice"}, {"color": "green", "id": "HARRIS CHEMIST", "label": "", "shape": "dot", "size": 89, "title": "HARRIS CHEMIST"}, {"color": "orange", "id": "Biscot Group Practice", "label": "", "shape": "dot", "size": 5, "title": "Biscot Group Practice"}, {"color": "orange", "id": "Malzeard Road Medical Centre", "label": "", "shape": "dot", "size": 5, "title": "Malzeard Road Medical Centre"}, {"color": "orange", "id": "Kingsbury Court Surgery", "label": "", "shape": "dot", "size": 5, "title": "Kingsbury Court Surgery"}, {"color": "orange", "id": "Village Surgery", "label": "", "shape": "dot", "size": 5, "title": "Village Surgery"}, {"color": "orange", "id": "Bute House Medical Centre", "label": "", "shape": "dot", "size": 5, "title": "Bute House Medical Centre"}, {"color": "orange", "id": "Dr Mirza \u0026 Partners (part of Hatters Health PCN)", "label": "", "shape": "dot", "size": 5, "title": "Dr Mirza \u0026 Partners (part of Hatters Health PCN)"}, {"color": "orange", "id": "Priory Gardens Surgery", "label": "", "shape": "dot", "size": 5, "title": "Priory Gardens Surgery"}, {"color": "orange", "id": "Lister House Surgery", "label": "", "shape": "dot", "size": 5, "title": "Lister House Surgery"}, {"color": "orange", "id": "Berrycroft Community Health Centre", "label": "", "shape": "dot", "size": 5, "title": "Berrycroft Community Health Centre"}, {"color": "orange", "id": "Leagrave Surgery part of Hatters Health PCN", "label": "", "shape": "dot", "size": 5, "title": "Leagrave Surgery part of Hatters Health PCN"}, {"color": "orange", "id": "Bell House Medical Centre", "label": "", "shape": "dot", "size": 5, "title": "Bell House Medical Centre"}, {"color": "orange", "id": "Conway Medical Centre", "label": "", "shape": "dot", "size": 5, "title": "Conway Medical Centre"}, {"color": "green", "id": "JANSSEN\u0027S PHARMACY", "label": "", "shape": "dot", "size": 13, "title": "JANSSEN\u0027S PHARMACY"}, {"color": "green", "id": "KAMSONS PHARMACY", "label": "", "shape": "dot", "size": 9, "title": "KAMSONS PHARMACY"}, {"color": "green", "id": "RANK PHARMACY", "label": "", "shape": "dot", "size": 121, "title": "RANK PHARMACY"}, {"color": "orange", "id": "Wheatfield Surgery", "label": "", "shape": "dot", "size": 5, "title": "Wheatfield Surgery"}, {"color": "orange", "id": "Chadwell Heath Surgery", "label": "", "shape": "dot", "size": 5, "title": "Chadwell Heath Surgery"}, {"color": "orange", "id": "Houghton Close Surgery", "label": "", "shape": "dot", "size": 5, "title": "Houghton Close Surgery"}, {"color": "orange", "id": "West Street Surgery", "label": "", "shape": "dot", "size": 5, "title": "West Street Surgery"}, {"color": "orange", "id": "Fellview Healthcare", "label": "", "shape": "dot", "size": 5, "title": "Fellview Healthcare"}, {"color": "orange", "id": "Lime Tree Surgery", "label": "", "shape": "dot", "size": 5, "title": "Lime Tree Surgery"}, {"color": "orange", "id": "Vita Healthcare - Bexhill", "label": "", "shape": "dot", "size": 5, "title": "Vita Healthcare - Bexhill"}, {"color": "orange", "id": "Dr A Sulakshana and Partners", "label": "", "shape": "dot", "size": 5, "title": "Dr A Sulakshana and Partners"}, {"color": "green", "id": "WESTBOURNE PHARMACY", "label": "", "shape": "dot", "size": 141, "title": "WESTBOURNE PHARMACY"}, {"color": "orange", "id": "Waddesdon Surgery", "label": "", "shape": "dot", "size": 5, "title": "Waddesdon Surgery"}, {"color": "orange", "id": "The New Surgery", "label": "", "shape": "dot", "size": 5, "title": "The New Surgery"}, {"color": "orange", "id": "The Phoenix Practice", "label": "", "shape": "dot", "size": 5, "title": "The Phoenix Practice"}, {"color": "orange", "id": "The Ridgeway Surgery - Harrow", "label": "", "shape": "dot", "size": 5, "title": "The Ridgeway Surgery - Harrow"}, {"color": "orange", "id": "Davenport House Surgery", "label": "", "shape": "dot", "size": 5, "title": "Davenport House Surgery"}, {"color": "orange", "id": "Gordon House Surgery", "label": "", "shape": "dot", "size": 5, "title": "Gordon House Surgery"}, {"color": "orange", "id": "The Pinn Medical Centre", "label": "", "shape": "dot", "size": 5, "title": "The Pinn Medical Centre"}, {"color": "orange", "id": "Elms Medical Practice", "label": "", "shape": "dot", "size": 5, "title": "Elms Medical Practice"}, {"color": "orange", "id": "The Parks Medical Practice", "label": "", "shape": "dot", "size": 5, "title": "The Parks Medical Practice"}, {"color": "orange", "id": "The Lodge Health Partnership", "label": "", "shape": "dot", "size": 5, "title": "The Lodge Health Partnership"}]);
+                  edges = new vis.DataSet([{"TOT_MESSAGES": 3.0, "arrows": "to", "color": "rgba(1.1915887850467288, 0, 253.80841121495328, 0.7)", "from": "CALVERTON PHARMACY", "title": "Messages: 3.0", "to": "Neville Road Surgery", "width": 1}, {"TOT_MESSAGES": 4.0, "arrows": "to", "color": "rgba(1.7873831775700935, 0, 253.2126168224299, 0.7)", "from": "CALVERTON PHARMACY", "title": "Messages: 4.0", "to": "Woodland Avenue Practice", "width": 1}, {"TOT_MESSAGES": 3.0, "arrows": "to", "color": "rgba(1.1915887850467288, 0, 253.80841121495328, 0.7)", "from": "CALVERTON PHARMACY", "title": "Messages: 3.0", "to": "Oakley Surgery", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "CALVERTON PHARMACY", "title": "Messages: 1.0", "to": "Kingsway \u0026 Bramingham Medical Centre", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "CALVERTON PHARMACY", "title": "Messages: 1.0", "to": "Gardenia Practice", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "CALVERTON PHARMACY", "title": "Messages: 1.0", "to": "Castle Medical Practice", "width": 1}, {"TOT_MESSAGES": 2.0, "arrows": "to", "color": "rgba(0.5957943925233644, 0, 254.40420560747663, 0.7)", "from": "CARERX", "title": "Messages: 2.0", "to": "Woodland Avenue Practice", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "CARERX", "title": "Messages: 1.0", "to": "The Medici Medical Practice", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "CARERX", "title": "Messages: 1.0", "to": "Lea Vale Medical Group", "width": 1}, {"TOT_MESSAGES": 28.0, "arrows": "to", "color": "rgba(16.08644859813084, 0, 238.91355140186917, 0.7)", "from": "CARERX", "title": "Messages: 28.0", "to": "Castle Medical Practice", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "CARERX", "title": "Messages: 1.0", "to": "Bancroft Medical Centre - Courtenay House", "width": 1}, {"TOT_MESSAGES": 62.0, "arrows": "to", "color": "rgba(36.34345794392523, 0, 218.65654205607476, 0.7)", "from": "CARERX", "title": "Messages: 62.0", "to": "Larkside Practice", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "CARERX", "title": "Messages: 1.0", "to": "Stopsley Village Practice", "width": 1}, {"TOT_MESSAGES": 3.0, "arrows": "to", "color": "rgba(1.1915887850467288, 0, 253.80841121495328, 0.7)", "from": "CARERX", "title": "Messages: 3.0", "to": "Barton Hills Medical Group", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "CARERX", "title": "Messages: 1.0", "to": "Priory Gate Practice", "width": 1}, {"TOT_MESSAGES": 2.0, "arrows": "to", "color": "rgba(0.5957943925233644, 0, 254.40420560747663, 0.7)", "from": "HARRIS CHEMIST", "title": "Messages: 2.0", "to": "Stopsley Village Practice", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "HARRIS CHEMIST", "title": "Messages: 1.0", "to": "Gardenia Practice", "width": 1}, {"TOT_MESSAGES": 6.0, "arrows": "to", "color": "rgba(2.9789719626168223, 0, 252.02102803738316, 0.7)", "from": "HARRIS CHEMIST", "title": "Messages: 6.0", "to": "Larkside Practice", "width": 1}, {"TOT_MESSAGES": 3.0, "arrows": "to", "color": "rgba(1.1915887850467288, 0, 253.80841121495328, 0.7)", "from": "HARRIS CHEMIST", "title": "Messages: 3.0", "to": "Woodland Avenue Practice", "width": 1}, {"TOT_MESSAGES": 6.0, "arrows": "to", "color": "rgba(2.9789719626168223, 0, 252.02102803738316, 0.7)", "from": "HARRIS CHEMIST", "title": "Messages: 6.0", "to": "Biscot Group Practice", "width": 1}, {"TOT_MESSAGES": 48.0, "arrows": "to", "color": "rgba(28.00233644859813, 0, 226.99766355140187, 0.7)", "from": "HARRIS CHEMIST", "title": "Messages: 48.0", "to": "Malzeard Road Medical Centre", "width": 1}, {"TOT_MESSAGES": 3.0, "arrows": "to", "color": "rgba(1.1915887850467288, 0, 253.80841121495328, 0.7)", "from": "HARRIS CHEMIST", "title": "Messages: 3.0", "to": "Kingsbury Court Surgery", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "HARRIS CHEMIST", "title": "Messages: 1.0", "to": "Village Surgery", "width": 1}, {"TOT_MESSAGES": 31.0, "arrows": "to", "color": "rgba(17.873831775700932, 0, 237.12616822429908, 0.7)", "from": "HARRIS CHEMIST", "title": "Messages: 31.0", "to": "Lea Vale Medical Group", "width": 1}, {"TOT_MESSAGES": 18.0, "arrows": "to", "color": "rgba(10.128504672897195, 0, 244.8714953271028, 0.7)", "from": "HARRIS CHEMIST", "title": "Messages: 18.0", "to": "Bute House Medical Centre", "width": 1}, {"TOT_MESSAGES": 4.0, "arrows": "to", "color": "rgba(1.7873831775700935, 0, 253.2126168224299, 0.7)", "from": "HARRIS CHEMIST", "title": "Messages: 4.0", "to": "Dr Mirza \u0026 Partners (part of Hatters Health PCN)", "width": 1}, {"TOT_MESSAGES": 4.0, "arrows": "to", "color": "rgba(1.7873831775700935, 0, 253.2126168224299, 0.7)", "from": "HARRIS CHEMIST", "title": "Messages: 4.0", "to": "Priory Gardens Surgery", "width": 1}, {"TOT_MESSAGES": 12.0, "arrows": "to", "color": "rgba(6.553738317757009, 0, 248.446261682243, 0.7)", "from": "HARRIS CHEMIST", "title": "Messages: 12.0", "to": "Kingsway \u0026 Bramingham Medical Centre", "width": 1}, {"TOT_MESSAGES": 11.0, "arrows": "to", "color": "rgba(5.957943925233645, 0, 249.04205607476638, 0.7)", "from": "HARRIS CHEMIST", "title": "Messages: 11.0", "to": "Lister House Surgery", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "HARRIS CHEMIST", "title": "Messages: 1.0", "to": "Berrycroft Community Health Centre", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "HARRIS CHEMIST", "title": "Messages: 1.0", "to": "Leagrave Surgery part of Hatters Health PCN", "width": 1}, {"TOT_MESSAGES": 231.0, "arrows": "to", "color": "rgba(137.03271028037383, 0, 117.96728971962617, 0.7)", "from": "HARRIS CHEMIST", "title": "Messages: 231.0", "to": "Bell House Medical Centre", "width": 1}, {"TOT_MESSAGES": 8.0, "arrows": "to", "color": "rgba(4.170560747663551, 0, 250.82943925233644, 0.7)", "from": "HARRIS CHEMIST", "title": "Messages: 8.0", "to": "Castle Medical Practice", "width": 1}, {"TOT_MESSAGES": 16.0, "arrows": "to", "color": "rgba(8.936915887850466, 0, 246.06308411214954, 0.7)", "from": "HARRIS CHEMIST", "title": "Messages: 16.0", "to": "The Medici Medical Practice", "width": 1}, {"TOT_MESSAGES": 3.0, "arrows": "to", "color": "rgba(1.1915887850467288, 0, 253.80841121495328, 0.7)", "from": "HARRIS CHEMIST", "title": "Messages: 3.0", "to": "Oakley Surgery", "width": 1}, {"TOT_MESSAGES": 8.0, "arrows": "to", "color": "rgba(4.170560747663551, 0, 250.82943925233644, 0.7)", "from": "HARRIS CHEMIST", "title": "Messages: 8.0", "to": "Conway Medical Centre", "width": 1}, {"TOT_MESSAGES": 3.0, "arrows": "to", "color": "rgba(1.1915887850467288, 0, 253.80841121495328, 0.7)", "from": "JANSSEN\u0027S PHARMACY", "title": "Messages: 3.0", "to": "Bell House Medical Centre", "width": 1}, {"TOT_MESSAGES": 2.0, "arrows": "to", "color": "rgba(0.5957943925233644, 0, 254.40420560747663, 0.7)", "from": "JANSSEN\u0027S PHARMACY", "title": "Messages: 2.0", "to": "Kingsway \u0026 Bramingham Medical Centre", "width": 1}, {"TOT_MESSAGES": 2.0, "arrows": "to", "color": "rgba(0.5957943925233644, 0, 254.40420560747663, 0.7)", "from": "KAMSONS PHARMACY", "title": "Messages: 2.0", "to": "Castle Medical Practice", "width": 1}, {"TOT_MESSAGES": 49.0, "arrows": "to", "color": "rgba(28.598130841121495, 0, 226.4018691588785, 0.7)", "from": "RANK PHARMACY", "title": "Messages: 49.0", "to": "Lister House Surgery", "width": 1}, {"TOT_MESSAGES": 7.0, "arrows": "to", "color": "rgba(3.574766355140187, 0, 251.42523364485982, 0.7)", "from": "RANK PHARMACY", "title": "Messages: 7.0", "to": "Castle Medical Practice", "width": 1}, {"TOT_MESSAGES": 35.0, "arrows": "to", "color": "rgba(20.25700934579439, 0, 234.7429906542056, 0.7)", "from": "RANK PHARMACY", "title": "Messages: 35.0", "to": "Priory Gardens Surgery", "width": 1}, {"TOT_MESSAGES": 227.0, "arrows": "to", "color": "rgba(134.64953271028037, 0, 120.35046728971963, 0.7)", "from": "RANK PHARMACY", "title": "Messages: 227.0", "to": "Malzeard Road Medical Centre", "width": 1}, {"TOT_MESSAGES": 21.0, "arrows": "to", "color": "rgba(11.91588785046729, 0, 243.0841121495327, 0.7)", "from": "RANK PHARMACY", "title": "Messages: 21.0", "to": "Leagrave Surgery part of Hatters Health PCN", "width": 1}, {"TOT_MESSAGES": 77.0, "arrows": "to", "color": "rgba(45.2803738317757, 0, 209.7196261682243, 0.7)", "from": "RANK PHARMACY", "title": "Messages: 77.0", "to": "Bell House Medical Centre", "width": 1}, {"TOT_MESSAGES": 25.0, "arrows": "to", "color": "rgba(14.299065420560748, 0, 240.70093457943926, 0.7)", "from": "RANK PHARMACY", "title": "Messages: 25.0", "to": "Wheatfield Surgery", "width": 1}, {"TOT_MESSAGES": 9.0, "arrows": "to", "color": "rgba(4.766355140186915, 0, 250.2336448598131, 0.7)", "from": "RANK PHARMACY", "title": "Messages: 9.0", "to": "Barton Hills Medical Group", "width": 1}, {"TOT_MESSAGES": 7.0, "arrows": "to", "color": "rgba(3.574766355140187, 0, 251.42523364485982, 0.7)", "from": "RANK PHARMACY", "title": "Messages: 7.0", "to": "Neville Road Surgery", "width": 1}, {"TOT_MESSAGES": 2.0, "arrows": "to", "color": "rgba(0.5957943925233644, 0, 254.40420560747663, 0.7)", "from": "RANK PHARMACY", "title": "Messages: 2.0", "to": "Chadwell Heath Surgery", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "RANK PHARMACY", "title": "Messages: 1.0", "to": "Houghton Close Surgery", "width": 1}, {"TOT_MESSAGES": 190.0, "arrows": "to", "color": "rgba(112.60514018691589, 0, 142.39485981308408, 0.7)", "from": "RANK PHARMACY", "title": "Messages: 190.0", "to": "Kingsway \u0026 Bramingham Medical Centre", "width": 1}, {"TOT_MESSAGES": 80.0, "arrows": "to", "color": "rgba(47.06775700934579, 0, 207.9322429906542, 0.7)", "from": "RANK PHARMACY", "title": "Messages: 80.0", "to": "Bute House Medical Centre", "width": 1}, {"TOT_MESSAGES": 2.0, "arrows": "to", "color": "rgba(0.5957943925233644, 0, 254.40420560747663, 0.7)", "from": "RANK PHARMACY", "title": "Messages: 2.0", "to": "Larkside Practice", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "RANK PHARMACY", "title": "Messages: 1.0", "to": "Kingsbury Court Surgery", "width": 1}, {"TOT_MESSAGES": 43.0, "arrows": "to", "color": "rgba(25.023364485981308, 0, 229.9766355140187, 0.7)", "from": "RANK PHARMACY", "title": "Messages: 43.0", "to": "Lea Vale Medical Group", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "RANK PHARMACY", "title": "Messages: 1.0", "to": "West Street Surgery", "width": 1}, {"TOT_MESSAGES": 55.0, "arrows": "to", "color": "rgba(32.17289719626168, 0, 222.82710280373834, 0.7)", "from": "RANK PHARMACY", "title": "Messages: 55.0", "to": "The Medici Medical Practice", "width": 1}, {"TOT_MESSAGES": 85.0, "arrows": "to", "color": "rgba(50.046728971962615, 0, 204.95327102803736, 0.7)", "from": "RANK PHARMACY", "title": "Messages: 85.0", "to": "Biscot Group Practice", "width": 1}, {"TOT_MESSAGES": 34.0, "arrows": "to", "color": "rgba(19.661214953271028, 0, 235.33878504672896, 0.7)", "from": "RANK PHARMACY", "title": "Messages: 34.0", "to": "Gardenia Practice", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "RANK PHARMACY", "title": "Messages: 1.0", "to": "Fellview Healthcare", "width": 1}, {"TOT_MESSAGES": 61.0, "arrows": "to", "color": "rgba(35.747663551401864, 0, 219.25233644859813, 0.7)", "from": "RANK PHARMACY", "title": "Messages: 61.0", "to": "Woodland Avenue Practice", "width": 1}, {"TOT_MESSAGES": 2.0, "arrows": "to", "color": "rgba(0.5957943925233644, 0, 254.40420560747663, 0.7)", "from": "RANK PHARMACY", "title": "Messages: 2.0", "to": "Lime Tree Surgery", "width": 1}, {"TOT_MESSAGES": 429.0, "arrows": "to", "color": "rgba(255.0, 0, 0.0, 0.7)", "from": "RANK PHARMACY", "title": "Messages: 429.0", "to": "Conway Medical Centre", "width": 1}, {"TOT_MESSAGES": 33.0, "arrows": "to", "color": "rgba(19.06542056074766, 0, 235.93457943925233, 0.7)", "from": "RANK PHARMACY", "title": "Messages: 33.0", "to": "Oakley Surgery", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "RANK PHARMACY", "title": "Messages: 1.0", "to": "Vita Healthcare - Bexhill", "width": 1}, {"TOT_MESSAGES": 28.0, "arrows": "to", "color": "rgba(16.08644859813084, 0, 238.91355140186917, 0.7)", "from": "RANK PHARMACY", "title": "Messages: 28.0", "to": "Stopsley Village Practice", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "RANK PHARMACY", "title": "Messages: 1.0", "to": "Dr A Sulakshana and Partners", "width": 1}, {"TOT_MESSAGES": 57.0, "arrows": "to", "color": "rgba(33.364485981308405, 0, 221.6355140186916, 0.7)", "from": "RANK PHARMACY", "title": "Messages: 57.0", "to": "Dr Mirza \u0026 Partners (part of Hatters Health PCN)", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "WESTBOURNE PHARMACY", "title": "Messages: 1.0", "to": "Waddesdon Surgery", "width": 1}, {"TOT_MESSAGES": 5.0, "arrows": "to", "color": "rgba(2.3831775700934577, 0, 252.61682242990653, 0.7)", "from": "WESTBOURNE PHARMACY", "title": "Messages: 5.0", "to": "Wheatfield Surgery", "width": 1}, {"TOT_MESSAGES": 8.0, "arrows": "to", "color": "rgba(4.170560747663551, 0, 250.82943925233644, 0.7)", "from": "WESTBOURNE PHARMACY", "title": "Messages: 8.0", "to": "Castle Medical Practice", "width": 1}, {"TOT_MESSAGES": 6.0, "arrows": "to", "color": "rgba(2.9789719626168223, 0, 252.02102803738316, 0.7)", "from": "WESTBOURNE PHARMACY", "title": "Messages: 6.0", "to": "Stopsley Village Practice", "width": 1}, {"TOT_MESSAGES": 7.0, "arrows": "to", "color": "rgba(3.574766355140187, 0, 251.42523364485982, 0.7)", "from": "WESTBOURNE PHARMACY", "title": "Messages: 7.0", "to": "Leagrave Surgery part of Hatters Health PCN", "width": 1}, {"TOT_MESSAGES": 2.0, "arrows": "to", "color": "rgba(0.5957943925233644, 0, 254.40420560747663, 0.7)", "from": "WESTBOURNE PHARMACY", "title": "Messages: 2.0", "to": "The New Surgery", "width": 1}, {"TOT_MESSAGES": 2.0, "arrows": "to", "color": "rgba(0.5957943925233644, 0, 254.40420560747663, 0.7)", "from": "WESTBOURNE PHARMACY", "title": "Messages: 2.0", "to": "The Medici Medical Practice", "width": 1}, {"TOT_MESSAGES": 10.0, "arrows": "to", "color": "rgba(5.36214953271028, 0, 249.63785046728972, 0.7)", "from": "WESTBOURNE PHARMACY", "title": "Messages: 10.0", "to": "Gardenia Practice", "width": 1}, {"TOT_MESSAGES": 71.0, "arrows": "to", "color": "rgba(41.705607476635514, 0, 213.2943925233645, 0.7)", "from": "WESTBOURNE PHARMACY", "title": "Messages: 71.0", "to": "Conway Medical Centre", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "WESTBOURNE PHARMACY", "title": "Messages: 1.0", "to": "The Phoenix Practice", "width": 1}, {"TOT_MESSAGES": 11.0, "arrows": "to", "color": "rgba(5.957943925233645, 0, 249.04205607476638, 0.7)", "from": "WESTBOURNE PHARMACY", "title": "Messages: 11.0", "to": "Bell House Medical Centre", "width": 1}, {"TOT_MESSAGES": 14.0, "arrows": "to", "color": "rgba(7.7453271028037385, 0, 247.25467289719626, 0.7)", "from": "WESTBOURNE PHARMACY", "title": "Messages: 14.0", "to": "Bute House Medical Centre", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "WESTBOURNE PHARMACY", "title": "Messages: 1.0", "to": "The Ridgeway Surgery - Harrow", "width": 1}, {"TOT_MESSAGES": 6.0, "arrows": "to", "color": "rgba(2.9789719626168223, 0, 252.02102803738316, 0.7)", "from": "WESTBOURNE PHARMACY", "title": "Messages: 6.0", "to": "Neville Road Surgery", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "WESTBOURNE PHARMACY", "title": "Messages: 1.0", "to": "Dr A Sulakshana and Partners", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "WESTBOURNE PHARMACY", "title": "Messages: 1.0", "to": "Davenport House Surgery", "width": 1}, {"TOT_MESSAGES": 39.0, "arrows": "to", "color": "rgba(22.64018691588785, 0, 232.35981308411215, 0.7)", "from": "WESTBOURNE PHARMACY", "title": "Messages: 39.0", "to": "Kingsway \u0026 Bramingham Medical Centre", "width": 1}, {"TOT_MESSAGES": 8.0, "arrows": "to", "color": "rgba(4.170560747663551, 0, 250.82943925233644, 0.7)", "from": "WESTBOURNE PHARMACY", "title": "Messages: 8.0", "to": "Oakley Surgery", "width": 1}, {"TOT_MESSAGES": 3.0, "arrows": "to", "color": "rgba(1.1915887850467288, 0, 253.80841121495328, 0.7)", "from": "WESTBOURNE PHARMACY", "title": "Messages: 3.0", "to": "Dr Mirza \u0026 Partners (part of Hatters Health PCN)", "width": 1}, {"TOT_MESSAGES": 7.0, "arrows": "to", "color": "rgba(3.574766355140187, 0, 251.42523364485982, 0.7)", "from": "WESTBOURNE PHARMACY", "title": "Messages: 7.0", "to": "Barton Hills Medical Group", "width": 1}, {"TOT_MESSAGES": 9.0, "arrows": "to", "color": "rgba(4.766355140186915, 0, 250.2336448598131, 0.7)", "from": "WESTBOURNE PHARMACY", "title": "Messages: 9.0", "to": "Woodland Avenue Practice", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "WESTBOURNE PHARMACY", "title": "Messages: 1.0", "to": "Village Surgery", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "WESTBOURNE PHARMACY", "title": "Messages: 1.0", "to": "Gordon House Surgery", "width": 1}, {"TOT_MESSAGES": 7.0, "arrows": "to", "color": "rgba(3.574766355140187, 0, 251.42523364485982, 0.7)", "from": "WESTBOURNE PHARMACY", "title": "Messages: 7.0", "to": "Biscot Group Practice", "width": 1}, {"TOT_MESSAGES": 22.0, "arrows": "to", "color": "rgba(12.511682242990654, 0, 242.48831775700933, 0.7)", "from": "WESTBOURNE PHARMACY", "title": "Messages: 22.0", "to": "Lea Vale Medical Group", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "WESTBOURNE PHARMACY", "title": "Messages: 1.0", "to": "The Pinn Medical Centre", "width": 1}, {"TOT_MESSAGES": 8.0, "arrows": "to", "color": "rgba(4.170560747663551, 0, 250.82943925233644, 0.7)", "from": "WESTBOURNE PHARMACY", "title": "Messages: 8.0", "to": "Malzeard Road Medical Centre", "width": 1}, {"TOT_MESSAGES": 14.0, "arrows": "to", "color": "rgba(7.7453271028037385, 0, 247.25467289719626, 0.7)", "from": "WESTBOURNE PHARMACY", "title": "Messages: 14.0", "to": "Lister House Surgery", "width": 1}, {"TOT_MESSAGES": 3.0, "arrows": "to", "color": "rgba(1.1915887850467288, 0, 253.80841121495328, 0.7)", "from": "WESTBOURNE PHARMACY", "title": "Messages: 3.0", "to": "Elms Medical Practice", "width": 1}, {"TOT_MESSAGES": 2.0, "arrows": "to", "color": "rgba(0.5957943925233644, 0, 254.40420560747663, 0.7)", "from": "WESTBOURNE PHARMACY", "title": "Messages: 2.0", "to": "The Parks Medical Practice", "width": 1}, {"TOT_MESSAGES": 3.0, "arrows": "to", "color": "rgba(1.1915887850467288, 0, 253.80841121495328, 0.7)", "from": "WESTBOURNE PHARMACY", "title": "Messages: 3.0", "to": "Larkside Practice", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "WESTBOURNE PHARMACY", "title": "Messages: 1.0", "to": "Bancroft Medical Centre - Courtenay House", "width": 1}, {"TOT_MESSAGES": 2.0, "arrows": "to", "color": "rgba(0.5957943925233644, 0, 254.40420560747663, 0.7)", "from": "WESTBOURNE PHARMACY", "title": "Messages: 2.0", "to": "The Lodge Health Partnership", "width": 1}, {"TOT_MESSAGES": 3.0, "arrows": "to", "color": "rgba(1.1915887850467288, 0, 253.80841121495328, 0.7)", "from": "WESTBOURNE PHARMACY", "title": "Messages: 3.0", "to": "Priory Gardens Surgery", "width": 1}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "forceAtlas2Based": {
+            "avoidOverlap": 0,
+            "centralGravity": 0.01,
+            "damping": 0.4,
+            "gravitationalConstant": -50,
+            "springConstant": 0.08,
+            "springLength": 100
+        },
+        "solver": "forceAtlas2Based",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

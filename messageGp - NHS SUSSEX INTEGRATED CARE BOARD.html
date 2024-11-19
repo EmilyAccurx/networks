@@ -1,0 +1,164 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 600px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body><h1 style='text-align:center;'>MessageGp - NHS SUSSEX INTEGRATED CARE BOARD</h1>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "green", "id": "BURWASH PHARMACY", "label": "", "shape": "dot", "size": 37, "title": "BURWASH PHARMACY"}, {"color": "orange", "id": "Hove Medical Centre", "label": "", "shape": "dot", "size": 5, "title": "Hove Medical Centre"}, {"color": "orange", "id": "St Johns Way Medical Centre", "label": "", "shape": "dot", "size": 5, "title": "St Johns Way Medical Centre"}, {"color": "orange", "id": "St. Peter\u0027s Health Centre", "label": "", "shape": "dot", "size": 5, "title": "St. Peter\u0027s Health Centre"}, {"color": "orange", "id": "Mile Oak Medical Centre", "label": "", "shape": "dot", "size": 5, "title": "Mile Oak Medical Centre"}, {"color": "orange", "id": "Northlands Wood Practice", "label": "", "shape": "dot", "size": 5, "title": "Northlands Wood Practice"}, {"color": "orange", "id": "The Charter Medical Centre", "label": "", "shape": "dot", "size": 5, "title": "The Charter Medical Centre"}, {"color": "orange", "id": "Links Road Surgery", "label": "", "shape": "dot", "size": 5, "title": "Links Road Surgery"}, {"color": "orange", "id": "WellBN", "label": "", "shape": "dot", "size": 5, "title": "WellBN"}, {"color": "green", "id": "HEALTHY-U PHARMACY", "label": "", "shape": "dot", "size": 13, "title": "HEALTHY-U PHARMACY"}, {"color": "orange", "id": "Park Crescent Health Centre", "label": "", "shape": "dot", "size": 5, "title": "Park Crescent Health Centre"}, {"color": "orange", "id": "Saltdean Medical Practice", "label": "", "shape": "dot", "size": 5, "title": "Saltdean Medical Practice"}, {"color": "green", "id": "KAMSONS", "label": "", "shape": "dot", "size": 9, "title": "KAMSONS"}, {"color": "orange", "id": "The Avenue Surgery", "label": "", "shape": "dot", "size": 5, "title": "The Avenue Surgery"}, {"color": "green", "id": "KAMSONS PHARMACY", "label": "", "shape": "dot", "size": 113, "title": "KAMSONS PHARMACY"}, {"color": "orange", "id": "West Meads Surgery", "label": "", "shape": "dot", "size": 5, "title": "West Meads Surgery"}, {"color": "orange", "id": "Seaside Medical Centre", "label": "", "shape": "dot", "size": 5, "title": "Seaside Medical Centre"}, {"color": "orange", "id": "Arlington Road Surgery", "label": "", "shape": "dot", "size": 5, "title": "Arlington Road Surgery"}, {"color": "orange", "id": "Vita Healthcare - Grove Road Surgery", "label": "", "shape": "dot", "size": 5, "title": "Vita Healthcare - Grove Road Surgery"}, {"color": "orange", "id": "Selsey Medical Practice", "label": "", "shape": "dot", "size": 5, "title": "Selsey Medical Practice"}, {"color": "orange", "id": "Langley Corner Surgery", "label": "", "shape": "dot", "size": 5, "title": "Langley Corner Surgery"}, {"color": "orange", "id": "Princes Park Health Centre", "label": "", "shape": "dot", "size": 5, "title": "Princes Park Health Centre"}, {"color": "orange", "id": "Vita Healthcare - Manor Park Medical Centre", "label": "", "shape": "dot", "size": 5, "title": "Vita Healthcare - Manor Park Medical Centre"}, {"color": "orange", "id": "Hailsham Medical Group", "label": "", "shape": "dot", "size": 5, "title": "Hailsham Medical Group"}, {"color": "orange", "id": "Beaconsfield Medical Practice", "label": "", "shape": "dot", "size": 5, "title": "Beaconsfield Medical Practice"}, {"color": "orange", "id": "University Of Sussex Health Centre", "label": "", "shape": "dot", "size": 5, "title": "University Of Sussex Health Centre"}, {"color": "orange", "id": "Preston Park Surgery", "label": "", "shape": "dot", "size": 5, "title": "Preston Park Surgery"}, {"color": "orange", "id": "Park Practice", "label": "", "shape": "dot", "size": 5, "title": "Park Practice"}, {"color": "orange", "id": "Willow Green Surgery", "label": "", "shape": "dot", "size": 5, "title": "Willow Green Surgery"}, {"color": "orange", "id": "Maywood Healthcare Centre", "label": "", "shape": "dot", "size": 5, "title": "Maywood Healthcare Centre"}, {"color": "orange", "id": "Downlands Medical Centre", "label": "", "shape": "dot", "size": 5, "title": "Downlands Medical Centre"}, {"color": "orange", "id": "Stone Cross Surgery", "label": "", "shape": "dot", "size": 5, "title": "Stone Cross Surgery"}, {"color": "orange", "id": "Stanford Medical Centre", "label": "", "shape": "dot", "size": 5, "title": "Stanford Medical Centre"}, {"color": "orange", "id": "Woodlands Surgery", "label": "", "shape": "dot", "size": 5, "title": "Woodlands Surgery"}, {"color": "orange", "id": "Roserton Street Surgery", "label": "", "shape": "dot", "size": 5, "title": "Roserton Street Surgery"}, {"color": "orange", "id": "Flansham Park Health Centre", "label": "", "shape": "dot", "size": 5, "title": "Flansham Park Health Centre"}, {"color": "orange", "id": "Avisford Medical Group", "label": "", "shape": "dot", "size": 5, "title": "Avisford Medical Group"}, {"color": "orange", "id": "Carden Surgery", "label": "", "shape": "dot", "size": 5, "title": "Carden Surgery"}, {"color": "orange", "id": "Bersted Green Surgery", "label": "", "shape": "dot", "size": 5, "title": "Bersted Green Surgery"}, {"color": "orange", "id": "Bognor Medical Practice", "label": "", "shape": "dot", "size": 5, "title": "Bognor Medical Practice"}, {"color": "orange", "id": "Victoria Medical Centre", "label": "", "shape": "dot", "size": 5, "title": "Victoria Medical Centre"}, {"color": "green", "id": "LLOYDSPHARMACY", "label": "", "shape": "dot", "size": 13, "title": "LLOYDSPHARMACY"}, {"color": "orange", "id": "Cuckfield Medical Practice", "label": "", "shape": "dot", "size": 5, "title": "Cuckfield Medical Practice"}, {"color": "orange", "id": "Wealden Ridge Medical Partnership", "label": "", "shape": "dot", "size": 5, "title": "Wealden Ridge Medical Partnership"}, {"color": "green", "id": "NORIES PHARMACY", "label": "", "shape": "dot", "size": 9, "title": "NORIES PHARMACY"}, {"color": "orange", "id": "Park Surgery", "label": "", "shape": "dot", "size": 5, "title": "Park Surgery"}, {"color": "green", "id": "SIDLEY PHARMACY", "label": "", "shape": "dot", "size": 21, "title": "SIDLEY PHARMACY"}, {"color": "orange", "id": "Vita Healthcare - Bexhill", "label": "", "shape": "dot", "size": 5, "title": "Vita Healthcare - Bexhill"}, {"color": "orange", "id": "High Glades Medical Centre", "label": "", "shape": "dot", "size": 5, "title": "High Glades Medical Centre"}]);
+                  edges = new vis.DataSet([{"TOT_MESSAGES": 18.0, "arrows": "to", "color": "rgba(120.41666666666666, 0, 134.58333333333334, 0.7)", "from": "BURWASH PHARMACY", "title": "Messages: 18.0", "to": "Hove Medical Centre", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "BURWASH PHARMACY", "title": "Messages: 1.0", "to": "St Johns Way Medical Centre", "width": 1}, {"TOT_MESSAGES": 2.0, "arrows": "to", "color": "rgba(7.083333333333333, 0, 247.91666666666666, 0.7)", "from": "BURWASH PHARMACY", "title": "Messages: 2.0", "to": "St. Peter\u0027s Health Centre", "width": 1}, {"TOT_MESSAGES": 4.0, "arrows": "to", "color": "rgba(21.25, 0, 233.75, 0.7)", "from": "BURWASH PHARMACY", "title": "Messages: 4.0", "to": "Mile Oak Medical Centre", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "BURWASH PHARMACY", "title": "Messages: 1.0", "to": "Northlands Wood Practice", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "BURWASH PHARMACY", "title": "Messages: 1.0", "to": "The Charter Medical Centre", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "BURWASH PHARMACY", "title": "Messages: 1.0", "to": "Links Road Surgery", "width": 1}, {"TOT_MESSAGES": 20.0, "arrows": "to", "color": "rgba(134.58333333333334, 0, 120.41666666666666, 0.7)", "from": "BURWASH PHARMACY", "title": "Messages: 20.0", "to": "WellBN", "width": 1}, {"TOT_MESSAGES": 2.0, "arrows": "to", "color": "rgba(7.083333333333333, 0, 247.91666666666666, 0.7)", "from": "HEALTHY-U PHARMACY", "title": "Messages: 2.0", "to": "Park Crescent Health Centre", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "HEALTHY-U PHARMACY", "title": "Messages: 1.0", "to": "Saltdean Medical Practice", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "KAMSONS", "title": "Messages: 1.0", "to": "The Avenue Surgery", "width": 1}, {"TOT_MESSAGES": 2.0, "arrows": "to", "color": "rgba(7.083333333333333, 0, 247.91666666666666, 0.7)", "from": "KAMSONS PHARMACY", "title": "Messages: 2.0", "to": "West Meads Surgery", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "KAMSONS PHARMACY", "title": "Messages: 1.0", "to": "Seaside Medical Centre", "width": 1}, {"TOT_MESSAGES": 15.0, "arrows": "to", "color": "rgba(99.16666666666667, 0, 155.83333333333334, 0.7)", "from": "KAMSONS PHARMACY", "title": "Messages: 15.0", "to": "Arlington Road Surgery", "width": 1}, {"TOT_MESSAGES": 20.0, "arrows": "to", "color": "rgba(134.58333333333334, 0, 120.41666666666666, 0.7)", "from": "KAMSONS PHARMACY", "title": "Messages: 20.0", "to": "Vita Healthcare - Grove Road Surgery", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "KAMSONS PHARMACY", "title": "Messages: 1.0", "to": "Selsey Medical Practice", "width": 1}, {"TOT_MESSAGES": 6.0, "arrows": "to", "color": "rgba(35.41666666666667, 0, 219.58333333333334, 0.7)", "from": "KAMSONS PHARMACY", "title": "Messages: 6.0", "to": "Langley Corner Surgery", "width": 1}, {"TOT_MESSAGES": 7.0, "arrows": "to", "color": "rgba(42.5, 0, 212.5, 0.7)", "from": "KAMSONS PHARMACY", "title": "Messages: 7.0", "to": "Princes Park Health Centre", "width": 1}, {"TOT_MESSAGES": 18.0, "arrows": "to", "color": "rgba(120.41666666666666, 0, 134.58333333333334, 0.7)", "from": "KAMSONS PHARMACY", "title": "Messages: 18.0", "to": "Vita Healthcare - Manor Park Medical Centre", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "KAMSONS PHARMACY", "title": "Messages: 1.0", "to": "Hailsham Medical Group", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "KAMSONS PHARMACY", "title": "Messages: 1.0", "to": "Beaconsfield Medical Practice", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "KAMSONS PHARMACY", "title": "Messages: 1.0", "to": "University Of Sussex Health Centre", "width": 1}, {"TOT_MESSAGES": 6.0, "arrows": "to", "color": "rgba(35.41666666666667, 0, 219.58333333333334, 0.7)", "from": "KAMSONS PHARMACY", "title": "Messages: 6.0", "to": "Preston Park Surgery", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "KAMSONS PHARMACY", "title": "Messages: 1.0", "to": "St. Peter\u0027s Health Centre", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "KAMSONS PHARMACY", "title": "Messages: 1.0", "to": "Park Practice", "width": 1}, {"TOT_MESSAGES": 3.0, "arrows": "to", "color": "rgba(14.166666666666666, 0, 240.83333333333331, 0.7)", "from": "KAMSONS PHARMACY", "title": "Messages: 3.0", "to": "Willow Green Surgery", "width": 1}, {"TOT_MESSAGES": 13.0, "arrows": "to", "color": "rgba(85.0, 0, 170.00000000000003, 0.7)", "from": "KAMSONS PHARMACY", "title": "Messages: 13.0", "to": "Maywood Healthcare Centre", "width": 1}, {"TOT_MESSAGES": 7.0, "arrows": "to", "color": "rgba(42.5, 0, 212.5, 0.7)", "from": "KAMSONS PHARMACY", "title": "Messages: 7.0", "to": "Downlands Medical Centre", "width": 1}, {"TOT_MESSAGES": 37.0, "arrows": "to", "color": "rgba(255.0, 0, 0.0, 0.7)", "from": "KAMSONS PHARMACY", "title": "Messages: 37.0", "to": "Stone Cross Surgery", "width": 1}, {"TOT_MESSAGES": 4.0, "arrows": "to", "color": "rgba(21.25, 0, 233.75, 0.7)", "from": "KAMSONS PHARMACY", "title": "Messages: 4.0", "to": "Stanford Medical Centre", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "KAMSONS PHARMACY", "title": "Messages: 1.0", "to": "Woodlands Surgery", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "KAMSONS PHARMACY", "title": "Messages: 1.0", "to": "Roserton Street Surgery", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "KAMSONS PHARMACY", "title": "Messages: 1.0", "to": "Flansham Park Health Centre", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "KAMSONS PHARMACY", "title": "Messages: 1.0", "to": "Avisford Medical Group", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "KAMSONS PHARMACY", "title": "Messages: 1.0", "to": "Carden Surgery", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "KAMSONS PHARMACY", "title": "Messages: 1.0", "to": "Bersted Green Surgery", "width": 1}, {"TOT_MESSAGES": 4.0, "arrows": "to", "color": "rgba(21.25, 0, 233.75, 0.7)", "from": "KAMSONS PHARMACY", "title": "Messages: 4.0", "to": "Bognor Medical Practice", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "KAMSONS PHARMACY", "title": "Messages: 1.0", "to": "Victoria Medical Centre", "width": 1}, {"TOT_MESSAGES": 20.0, "arrows": "to", "color": "rgba(134.58333333333334, 0, 120.41666666666666, 0.7)", "from": "LLOYDSPHARMACY", "title": "Messages: 20.0", "to": "Cuckfield Medical Practice", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "LLOYDSPHARMACY", "title": "Messages: 1.0", "to": "Wealden Ridge Medical Partnership", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "NORIES PHARMACY", "title": "Messages: 1.0", "to": "Park Surgery", "width": 1}, {"TOT_MESSAGES": 9.0, "arrows": "to", "color": "rgba(56.666666666666664, 0, 198.33333333333334, 0.7)", "from": "SIDLEY PHARMACY", "title": "Messages: 9.0", "to": "Vita Healthcare - Bexhill", "width": 1}, {"TOT_MESSAGES": NaN, "arrows": "to", "color": "rgba(nan, 0, nan, 0.7)", "from": "SIDLEY PHARMACY", "title": "Messages: nan", "to": "High Glades Medical Centre", "width": 1}, {"TOT_MESSAGES": 2.0, "arrows": "to", "color": "rgba(7.083333333333333, 0, 247.91666666666666, 0.7)", "from": "SIDLEY PHARMACY", "title": "Messages: 2.0", "to": "Victoria Medical Centre", "width": 1}, {"TOT_MESSAGES": 9.0, "arrows": "to", "color": "rgba(56.666666666666664, 0, 198.33333333333334, 0.7)", "from": "SIDLEY PHARMACY", "title": "Messages: 9.0", "to": "Vita Healthcare - Grove Road Surgery", "width": 1}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "forceAtlas2Based": {
+            "avoidOverlap": 0,
+            "centralGravity": 0.01,
+            "damping": 0.4,
+            "gravitationalConstant": -50,
+            "springConstant": 0.08,
+            "springLength": 100
+        },
+        "solver": "forceAtlas2Based",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

@@ -1,0 +1,259 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 600px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+             #loadingBar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width: 100%;
+                 height: 600px;
+                 background-color:rgba(200,200,200,0.8);
+                 -webkit-transition: all 0.5s ease;
+                 -moz-transition: all 0.5s ease;
+                 -ms-transition: all 0.5s ease;
+                 -o-transition: all 0.5s ease;
+                 transition: all 0.5s ease;
+                 opacity:1;
+             }
+
+             #bar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width:20px;
+                 height:20px;
+                 margin:auto auto auto auto;
+                 border-radius:11px;
+                 border:2px solid rgba(30,30,30,0.05);
+                 background: rgb(0, 173, 246); /* Old browsers */
+                 box-shadow: 2px 0px 4px rgba(0,0,0,0.4);
+             }
+
+             #border {
+                 position:absolute;
+                 top:10px;
+                 left:10px;
+                 width:500px;
+                 height:23px;
+                 margin:auto auto auto auto;
+                 box-shadow: 0px 0px 4px rgba(0,0,0,0.2);
+                 border-radius:10px;
+             }
+
+             #text {
+                 position:absolute;
+                 top:8px;
+                 left:530px;
+                 width:30px;
+                 height:50px;
+                 margin:auto auto auto auto;
+                 font-size:22px;
+                 color: #000000;
+             }
+
+             div.outerBorder {
+                 position:relative;
+                 top:400px;
+                 width:600px;
+                 height:44px;
+                 margin:auto auto auto auto;
+                 border:8px solid rgba(0,0,0,0.1);
+                 background: rgb(252,252,252); /* Old browsers */
+                 background: -moz-linear-gradient(top,  rgba(252,252,252,1) 0%, rgba(237,237,237,1) 100%); /* FF3.6+ */
+                 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(252,252,252,1)), color-stop(100%,rgba(237,237,237,1))); /* Chrome,Safari4+ */
+                 background: -webkit-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Chrome10+,Safari5.1+ */
+                 background: -o-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Opera 11.10+ */
+                 background: -ms-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* IE10+ */
+                 background: linear-gradient(to bottom,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* W3C */
+                 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcfc', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+                 border-radius:72px;
+                 box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+             }
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body><h1 style='text-align:center;'>MessageGp - NHS KENT AND MEDWAY INTEGRATED CARE BOARD</h1>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+            <div id="loadingBar">
+              <div class="outerBorder">
+                <div id="text">0%</div>
+                <div id="border">
+                  <div id="bar"></div>
+                </div>
+              </div>
+            </div>
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "green", "id": "KENT COMMUNITY HEALTH NHS FOUNDATION TRUST", "label": "", "shape": "dot", "size": 13, "title": "KENT COMMUNITY HEALTH NHS FOUNDATION TRUST"}, {"color": "orange", "id": "Matrix Medical Centre", "label": "", "shape": "dot", "size": 5, "title": "Matrix Medical Centre"}, {"color": "orange", "id": "MPA Group Practices", "label": "", "shape": "dot", "size": 5, "title": "MPA Group Practices"}, {"color": "green", "id": "MCQUEEN\u0027S PHARMACY", "label": "", "shape": "dot", "size": 9, "title": "MCQUEEN\u0027S PHARMACY"}, {"color": "orange", "id": "Redwood Practice", "label": "", "shape": "dot", "size": 5, "title": "Redwood Practice"}, {"color": "green", "id": "OXLEAS NHS FOUNDATION TRUST", "label": "", "shape": "dot", "size": 377, "title": "OXLEAS NHS FOUNDATION TRUST"}, {"color": "orange", "id": "Valentine Health Partnership", "label": "", "shape": "dot", "size": 5, "title": "Valentine Health Partnership"}, {"color": "orange", "id": "Bromley Common Practice", "label": "", "shape": "dot", "size": 5, "title": "Bromley Common Practice"}, {"color": "orange", "id": "Dr Davies and Partner", "label": "", "shape": "dot", "size": 5, "title": "Dr Davies and Partner"}, {"color": "orange", "id": "The Lewisham Care Partnership", "label": "", "shape": "dot", "size": 5, "title": "The Lewisham Care Partnership"}, {"color": "orange", "id": "Royal Arsenal Medical Centre", "label": "", "shape": "dot", "size": 5, "title": "Royal Arsenal Medical Centre"}, {"color": "orange", "id": "Summercroft Surgery", "label": "", "shape": "dot", "size": 5, "title": "Summercroft Surgery"}, {"color": "orange", "id": "Greenwich Peninsula", "label": "", "shape": "dot", "size": 5, "title": "Greenwich Peninsula"}, {"color": "orange", "id": "Lyndhurst Medical Centre", "label": "", "shape": "dot", "size": 5, "title": "Lyndhurst Medical Centre"}, {"color": "orange", "id": "Streatham High Practice", "label": "", "shape": "dot", "size": 5, "title": "Streatham High Practice"}, {"color": "orange", "id": "Lewisham Medical Centre", "label": "", "shape": "dot", "size": 5, "title": "Lewisham Medical Centre"}, {"color": "orange", "id": "Bexley Group Practice", "label": "", "shape": "dot", "size": 5, "title": "Bexley Group Practice"}, {"color": "orange", "id": "Cornerways Surgery", "label": "", "shape": "dot", "size": 5, "title": "Cornerways Surgery"}, {"color": "orange", "id": "Clifton Rise Family Practice", "label": "", "shape": "dot", "size": 5, "title": "Clifton Rise Family Practice"}, {"color": "orange", "id": "Gravesend Medical Centre", "label": "", "shape": "dot", "size": 5, "title": "Gravesend Medical Centre"}, {"color": "orange", "id": "Woodland Surgery", "label": "", "shape": "dot", "size": 5, "title": "Woodland Surgery"}, {"color": "orange", "id": "Slade Green Medical Centre", "label": "", "shape": "dot", "size": 5, "title": "Slade Green Medical Centre"}, {"color": "orange", "id": "Anerley Surgery", "label": "", "shape": "dot", "size": 5, "title": "Anerley Surgery"}, {"color": "orange", "id": "Poverest Medical Centre", "label": "", "shape": "dot", "size": 5, "title": "Poverest Medical Centre"}, {"color": "orange", "id": "South View Partnership", "label": "", "shape": "dot", "size": 5, "title": "South View Partnership"}, {"color": "orange", "id": "Gillmans Road Surgery", "label": "", "shape": "dot", "size": 5, "title": "Gillmans Road Surgery"}, {"color": "orange", "id": "Family Surgery", "label": "", "shape": "dot", "size": 5, "title": "Family Surgery"}, {"color": "orange", "id": "London Lane Clinic", "label": "", "shape": "dot", "size": 5, "title": "London Lane Clinic"}, {"color": "orange", "id": "Basildon Road Surgery", "label": "", "shape": "dot", "size": 5, "title": "Basildon Road Surgery"}, {"color": "orange", "id": "The Elms Medical Centre", "label": "", "shape": "dot", "size": 5, "title": "The Elms Medical Centre"}, {"color": "orange", "id": "Torridon Road Medical Practice", "label": "", "shape": "dot", "size": 5, "title": "Torridon Road Medical Practice"}, {"color": "orange", "id": "Primecare Pms (South Street)", "label": "", "shape": "dot", "size": 5, "title": "Primecare Pms (South Street)"}, {"color": "orange", "id": "Primecare PMS ( Elmstead Medical Clinic )", "label": "", "shape": "dot", "size": 5, "title": "Primecare PMS ( Elmstead Medical Clinic )"}, {"color": "orange", "id": "The Albion Surgery", "label": "", "shape": "dot", "size": 5, "title": "The Albion Surgery"}, {"color": "orange", "id": "Plumbridge Medical Centre", "label": "", "shape": "dot", "size": 5, "title": "Plumbridge Medical Centre"}, {"color": "orange", "id": "Northumberland Heath Medical Centre", "label": "", "shape": "dot", "size": 5, "title": "Northumberland Heath Medical Centre"}, {"color": "orange", "id": "Sidcup Medical Centre", "label": "", "shape": "dot", "size": 5, "title": "Sidcup Medical Centre"}, {"color": "orange", "id": "Conway PMS", "label": "", "shape": "dot", "size": 5, "title": "Conway PMS"}, {"color": "orange", "id": "Highparks Medical Practice", "label": "", "shape": "dot", "size": 5, "title": "Highparks Medical Practice"}, {"color": "orange", "id": "Stock Hill Medical Centre", "label": "", "shape": "dot", "size": 5, "title": "Stock Hill Medical Centre"}, {"color": "orange", "id": "Abbey Wood Surgery", "label": "", "shape": "dot", "size": 5, "title": "Abbey Wood Surgery"}, {"color": "orange", "id": "Links Medical Practice", "label": "", "shape": "dot", "size": 5, "title": "Links Medical Practice"}, {"color": "orange", "id": "Wickham Park Surgery", "label": "", "shape": "dot", "size": 5, "title": "Wickham Park Surgery"}, {"color": "orange", "id": "St Marks PMS", "label": "", "shape": "dot", "size": 5, "title": "St Marks PMS"}, {"color": "orange", "id": "Vanbrugh Group Practice", "label": "", "shape": "dot", "size": 5, "title": "Vanbrugh Group Practice"}, {"color": "orange", "id": "Glyndon PMS", "label": "", "shape": "dot", "size": 5, "title": "Glyndon PMS"}, {"color": "orange", "id": "Crayford Town Surgery", "label": "", "shape": "dot", "size": 5, "title": "Crayford Town Surgery"}, {"color": "orange", "id": "SEL Special Allocation Service", "label": "", "shape": "dot", "size": 5, "title": "SEL Special Allocation Service"}, {"color": "orange", "id": "St James\u0027 Practice", "label": "", "shape": "dot", "size": 5, "title": "St James\u0027 Practice"}, {"color": "orange", "id": "Lakeside Medical Practice", "label": "", "shape": "dot", "size": 5, "title": "Lakeside Medical Practice"}, {"color": "orange", "id": "New Cross Health Centre", "label": "", "shape": "dot", "size": 5, "title": "New Cross Health Centre"}, {"color": "orange", "id": "Welling Medical Practice", "label": "", "shape": "dot", "size": 5, "title": "Welling Medical Practice"}, {"color": "orange", "id": "The Westwood Surgery", "label": "", "shape": "dot", "size": 5, "title": "The Westwood Surgery"}, {"color": "orange", "id": "Woodlands Primary Care", "label": "", "shape": "dot", "size": 5, "title": "Woodlands Primary Care"}, {"color": "orange", "id": "Lee Road Surgery", "label": "", "shape": "dot", "size": 5, "title": "Lee Road Surgery"}, {"color": "orange", "id": "Manor Brook Medical Practice", "label": "", "shape": "dot", "size": 5, "title": "Manor Brook Medical Practice"}, {"color": "orange", "id": "Eltham Palace Surgery", "label": "", "shape": "dot", "size": 5, "title": "Eltham Palace Surgery"}, {"color": "orange", "id": "Triveni Pms", "label": "", "shape": "dot", "size": 5, "title": "Triveni Pms"}, {"color": "orange", "id": "All Saints Medical Centre PMS", "label": "", "shape": "dot", "size": 5, "title": "All Saints Medical Centre PMS"}, {"color": "orange", "id": "St Mary Cray Practice", "label": "", "shape": "dot", "size": 5, "title": "St Mary Cray Practice"}, {"color": "orange", "id": "Bannockburn Surgery", "label": "", "shape": "dot", "size": 5, "title": "Bannockburn Surgery"}, {"color": "orange", "id": "Bank House Surgery", "label": "", "shape": "dot", "size": 5, "title": "Bank House Surgery"}, {"color": "orange", "id": "Eden Park Surgery", "label": "", "shape": "dot", "size": 5, "title": "Eden Park Surgery"}, {"color": "orange", "id": "Novum Health Partnership", "label": "", "shape": "dot", "size": 5, "title": "Novum Health Partnership"}, {"color": "orange", "id": "Wandsworth Medical Centre", "label": "", "shape": "dot", "size": 5, "title": "Wandsworth Medical Centre"}, {"color": "orange", "id": "Broomwood Health Centre", "label": "", "shape": "dot", "size": 5, "title": "Broomwood Health Centre"}, {"color": "orange", "id": "Waverley PMS", "label": "", "shape": "dot", "size": 5, "title": "Waverley PMS"}, {"color": "orange", "id": "New Eltham \u0026 Blackfen Medical Centre", "label": "", "shape": "dot", "size": 5, "title": "New Eltham \u0026 Blackfen Medical Centre"}, {"color": "orange", "id": "Park Group Practice", "label": "", "shape": "dot", "size": 5, "title": "Park Group Practice"}, {"color": "orange", "id": "Mostafa Pms", "label": "", "shape": "dot", "size": 5, "title": "Mostafa Pms"}, {"color": "orange", "id": "Dysart Surgery", "label": "", "shape": "dot", "size": 5, "title": "Dysart Surgery"}, {"color": "orange", "id": "Bursted Wood Surgery", "label": "", "shape": "dot", "size": 5, "title": "Bursted Wood Surgery"}, {"color": "orange", "id": "Nightingale Surgery", "label": "", "shape": "dot", "size": 5, "title": "Nightingale Surgery"}, {"color": "orange", "id": "Ingleton Avenue Surgery", "label": "", "shape": "dot", "size": 5, "title": "Ingleton Avenue Surgery"}, {"color": "orange", "id": "Putneymead Group Medical Practice", "label": "", "shape": "dot", "size": 5, "title": "Putneymead Group Medical Practice"}, {"color": "orange", "id": "The Chislehurst Partnership", "label": "", "shape": "dot", "size": 5, "title": "The Chislehurst Partnership"}, {"color": "orange", "id": "Thornton Heath Medical Practice", "label": "", "shape": "dot", "size": 5, "title": "Thornton Heath Medical Practice"}, {"color": "orange", "id": "Modality Lewisham", "label": "", "shape": "dot", "size": 5, "title": "Modality Lewisham"}, {"color": "orange", "id": "Sundridge Medical Practice", "label": "", "shape": "dot", "size": 5, "title": "Sundridge Medical Practice"}, {"color": "orange", "id": "Ballater Surgery", "label": "", "shape": "dot", "size": 5, "title": "Ballater Surgery"}, {"color": "orange", "id": "Derry Downs Surgery", "label": "", "shape": "dot", "size": 5, "title": "Derry Downs Surgery"}, {"color": "orange", "id": "Salford Medical Centre", "label": "", "shape": "dot", "size": 5, "title": "Salford Medical Centre"}, {"color": "orange", "id": "Thamesmead Health Centre", "label": "", "shape": "dot", "size": 5, "title": "Thamesmead Health Centre"}, {"color": "orange", "id": "Swanscombe Health Centre", "label": "", "shape": "dot", "size": 5, "title": "Swanscombe Health Centre"}, {"color": "orange", "id": "Forge Close Surgery", "label": "", "shape": "dot", "size": 5, "title": "Forge Close Surgery"}, {"color": "orange", "id": "Ashdown Medical Group", "label": "", "shape": "dot", "size": 5, "title": "Ashdown Medical Group"}, {"color": "orange", "id": "Burney Street Pms", "label": "", "shape": "dot", "size": 5, "title": "Burney Street Pms"}, {"color": "orange", "id": "Ico", "label": "", "shape": "dot", "size": 5, "title": "Ico"}, {"color": "orange", "id": "Belvedere Medical Centre", "label": "", "shape": "dot", "size": 5, "title": "Belvedere Medical Centre"}, {"color": "orange", "id": "Plumstead H/C PMS", "label": "", "shape": "dot", "size": 5, "title": "Plumstead H/C PMS"}, {"color": "orange", "id": "Riverside Surgery", "label": "", "shape": "dot", "size": 5, "title": "Riverside Surgery"}, {"color": "orange", "id": "Eltham Medical Practice", "label": "", "shape": "dot", "size": 5, "title": "Eltham Medical Practice"}, {"color": "orange", "id": "Blackheath Standard PMS", "label": "", "shape": "dot", "size": 5, "title": "Blackheath Standard PMS"}, {"color": "orange", "id": "Station Road Surgery", "label": "", "shape": "dot", "size": 5, "title": "Station Road Surgery"}, {"color": "orange", "id": "Knoll Medical Practice", "label": "", "shape": "dot", "size": 5, "title": "Knoll Medical Practice"}, {"color": "orange", "id": "Highland Medical Practice", "label": "", "shape": "dot", "size": 5, "title": "Highland Medical Practice"}, {"color": "orange", "id": "Bexley Medical Group", "label": "", "shape": "dot", "size": 5, "title": "Bexley Medical Group"}, {"color": "orange", "id": "Fairfield PMS", "label": "", "shape": "dot", "size": 5, "title": "Fairfield PMS"}, {"color": "orange", "id": "The Station Practice", "label": "", "shape": "dot", "size": 5, "title": "The Station Practice"}, {"color": "green", "id": "SAXON WARRIOR PHARMACY", "label": "", "shape": "dot", "size": 17, "title": "SAXON WARRIOR PHARMACY"}, {"color": "orange", "id": "Bower Mount Medical Practice", "label": "", "shape": "dot", "size": 5, "title": "Bower Mount Medical Practice"}, {"color": "orange", "id": "Len Valley Practice", "label": "", "shape": "dot", "size": 5, "title": "Len Valley Practice"}]);
+                  edges = new vis.DataSet([{"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "KENT COMMUNITY HEALTH NHS FOUNDATION TRUST", "title": "Messages: 1.0", "to": "Matrix Medical Centre", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "KENT COMMUNITY HEALTH NHS FOUNDATION TRUST", "title": "Messages: 1.0", "to": "MPA Group Practices", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "MCQUEEN\u0027S PHARMACY", "title": "Messages: 1.0", "to": "Redwood Practice", "width": 1}, {"TOT_MESSAGES": 12.0, "arrows": "to", "color": "rgba(66.78571428571429, 0, 188.21428571428572, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 12.0", "to": "Valentine Health Partnership", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 1.0", "to": "Bromley Common Practice", "width": 1}, {"TOT_MESSAGES": 11.0, "arrows": "to", "color": "rgba(60.71428571428571, 0, 194.28571428571428, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 11.0", "to": "Dr Davies and Partner", "width": 1}, {"TOT_MESSAGES": 3.0, "arrows": "to", "color": "rgba(12.142857142857142, 0, 242.85714285714283, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 3.0", "to": "The Lewisham Care Partnership", "width": 1}, {"TOT_MESSAGES": 4.0, "arrows": "to", "color": "rgba(18.21428571428571, 0, 236.7857142857143, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 4.0", "to": "Royal Arsenal Medical Centre", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 1.0", "to": "Summercroft Surgery", "width": 1}, {"TOT_MESSAGES": 19.0, "arrows": "to", "color": "rgba(109.28571428571428, 0, 145.7142857142857, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 19.0", "to": "Greenwich Peninsula", "width": 1}, {"TOT_MESSAGES": 6.0, "arrows": "to", "color": "rgba(30.357142857142854, 0, 224.64285714285714, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 6.0", "to": "Lyndhurst Medical Centre", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 1.0", "to": "Streatham High Practice", "width": 1}, {"TOT_MESSAGES": 4.0, "arrows": "to", "color": "rgba(18.21428571428571, 0, 236.7857142857143, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 4.0", "to": "Lewisham Medical Centre", "width": 1}, {"TOT_MESSAGES": 8.0, "arrows": "to", "color": "rgba(42.5, 0, 212.5, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 8.0", "to": "Bexley Group Practice", "width": 1}, {"TOT_MESSAGES": 2.0, "arrows": "to", "color": "rgba(6.071428571428571, 0, 248.92857142857142, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 2.0", "to": "Cornerways Surgery", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 1.0", "to": "Clifton Rise Family Practice", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 1.0", "to": "Gravesend Medical Centre", "width": 1}, {"TOT_MESSAGES": 14.0, "arrows": "to", "color": "rgba(78.92857142857143, 0, 176.07142857142856, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 14.0", "to": "Woodland Surgery", "width": 1}, {"TOT_MESSAGES": 7.0, "arrows": "to", "color": "rgba(36.42857142857142, 0, 218.57142857142858, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 7.0", "to": "Slade Green Medical Centre", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 1.0", "to": "Anerley Surgery", "width": 1}, {"TOT_MESSAGES": 4.0, "arrows": "to", "color": "rgba(18.21428571428571, 0, 236.7857142857143, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 4.0", "to": "Poverest Medical Centre", "width": 1}, {"TOT_MESSAGES": NaN, "arrows": "to", "color": "rgba(nan, 0, nan, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: nan", "to": "South View Partnership", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 1.0", "to": "Gillmans Road Surgery", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 1.0", "to": "Family Surgery", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 1.0", "to": "London Lane Clinic", "width": 1}, {"TOT_MESSAGES": 2.0, "arrows": "to", "color": "rgba(6.071428571428571, 0, 248.92857142857142, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 2.0", "to": "Basildon Road Surgery", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 1.0", "to": "The Elms Medical Centre", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 1.0", "to": "Torridon Road Medical Practice", "width": 1}, {"TOT_MESSAGES": 15.0, "arrows": "to", "color": "rgba(85.0, 0, 170.00000000000003, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 15.0", "to": "Primecare Pms (South Street)", "width": 1}, {"TOT_MESSAGES": 7.0, "arrows": "to", "color": "rgba(36.42857142857142, 0, 218.57142857142858, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 7.0", "to": "Primecare PMS ( Elmstead Medical Clinic )", "width": 1}, {"TOT_MESSAGES": 4.0, "arrows": "to", "color": "rgba(18.21428571428571, 0, 236.7857142857143, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 4.0", "to": "The Albion Surgery", "width": 1}, {"TOT_MESSAGES": 2.0, "arrows": "to", "color": "rgba(6.071428571428571, 0, 248.92857142857142, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 2.0", "to": "Plumbridge Medical Centre", "width": 1}, {"TOT_MESSAGES": 10.0, "arrows": "to", "color": "rgba(54.64285714285714, 0, 200.35714285714286, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 10.0", "to": "Northumberland Heath Medical Centre", "width": 1}, {"TOT_MESSAGES": 8.0, "arrows": "to", "color": "rgba(42.5, 0, 212.5, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 8.0", "to": "Sidcup Medical Centre", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 1.0", "to": "Conway PMS", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 1.0", "to": "Highparks Medical Practice", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 1.0", "to": "Stock Hill Medical Centre", "width": 1}, {"TOT_MESSAGES": 2.0, "arrows": "to", "color": "rgba(6.071428571428571, 0, 248.92857142857142, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 2.0", "to": "Abbey Wood Surgery", "width": 1}, {"TOT_MESSAGES": 2.0, "arrows": "to", "color": "rgba(6.071428571428571, 0, 248.92857142857142, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 2.0", "to": "Links Medical Practice", "width": 1}, {"TOT_MESSAGES": 2.0, "arrows": "to", "color": "rgba(6.071428571428571, 0, 248.92857142857142, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 2.0", "to": "Wickham Park Surgery", "width": 1}, {"TOT_MESSAGES": 15.0, "arrows": "to", "color": "rgba(85.0, 0, 170.00000000000003, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 15.0", "to": "St Marks PMS", "width": 1}, {"TOT_MESSAGES": 20.0, "arrows": "to", "color": "rgba(115.35714285714286, 0, 139.64285714285717, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 20.0", "to": "Vanbrugh Group Practice", "width": 1}, {"TOT_MESSAGES": 6.0, "arrows": "to", "color": "rgba(30.357142857142854, 0, 224.64285714285714, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 6.0", "to": "Glyndon PMS", "width": 1}, {"TOT_MESSAGES": 3.0, "arrows": "to", "color": "rgba(12.142857142857142, 0, 242.85714285714283, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 3.0", "to": "Crayford Town Surgery", "width": 1}, {"TOT_MESSAGES": 4.0, "arrows": "to", "color": "rgba(18.21428571428571, 0, 236.7857142857143, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 4.0", "to": "SEL Special Allocation Service", "width": 1}, {"TOT_MESSAGES": 2.0, "arrows": "to", "color": "rgba(6.071428571428571, 0, 248.92857142857142, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 2.0", "to": "St James\u0027 Practice", "width": 1}, {"TOT_MESSAGES": 13.0, "arrows": "to", "color": "rgba(72.85714285714285, 0, 182.14285714285714, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 13.0", "to": "Lakeside Medical Practice", "width": 1}, {"TOT_MESSAGES": 2.0, "arrows": "to", "color": "rgba(6.071428571428571, 0, 248.92857142857142, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 2.0", "to": "New Cross Health Centre", "width": 1}, {"TOT_MESSAGES": 9.0, "arrows": "to", "color": "rgba(48.57142857142857, 0, 206.42857142857144, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 9.0", "to": "Welling Medical Practice", "width": 1}, {"TOT_MESSAGES": 6.0, "arrows": "to", "color": "rgba(30.357142857142854, 0, 224.64285714285714, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 6.0", "to": "The Westwood Surgery", "width": 1}, {"TOT_MESSAGES": 13.0, "arrows": "to", "color": "rgba(72.85714285714285, 0, 182.14285714285714, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 13.0", "to": "Woodlands Primary Care", "width": 1}, {"TOT_MESSAGES": 5.0, "arrows": "to", "color": "rgba(24.285714285714285, 0, 230.71428571428572, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 5.0", "to": "Lee Road Surgery", "width": 1}, {"TOT_MESSAGES": 10.0, "arrows": "to", "color": "rgba(54.64285714285714, 0, 200.35714285714286, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 10.0", "to": "Manor Brook Medical Practice", "width": 1}, {"TOT_MESSAGES": 14.0, "arrows": "to", "color": "rgba(78.92857142857143, 0, 176.07142857142856, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 14.0", "to": "Eltham Palace Surgery", "width": 1}, {"TOT_MESSAGES": 4.0, "arrows": "to", "color": "rgba(18.21428571428571, 0, 236.7857142857143, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 4.0", "to": "Triveni Pms", "width": 1}, {"TOT_MESSAGES": 12.0, "arrows": "to", "color": "rgba(66.78571428571429, 0, 188.21428571428572, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 12.0", "to": "All Saints Medical Centre PMS", "width": 1}, {"TOT_MESSAGES": 3.0, "arrows": "to", "color": "rgba(12.142857142857142, 0, 242.85714285714283, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 3.0", "to": "St Mary Cray Practice", "width": 1}, {"TOT_MESSAGES": 7.0, "arrows": "to", "color": "rgba(36.42857142857142, 0, 218.57142857142858, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 7.0", "to": "Bannockburn Surgery", "width": 1}, {"TOT_MESSAGES": 3.0, "arrows": "to", "color": "rgba(12.142857142857142, 0, 242.85714285714283, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 3.0", "to": "Bank House Surgery", "width": 1}, {"TOT_MESSAGES": 3.0, "arrows": "to", "color": "rgba(12.142857142857142, 0, 242.85714285714283, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 3.0", "to": "Eden Park Surgery", "width": 1}, {"TOT_MESSAGES": 4.0, "arrows": "to", "color": "rgba(18.21428571428571, 0, 236.7857142857143, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 4.0", "to": "Novum Health Partnership", "width": 1}, {"TOT_MESSAGES": 2.0, "arrows": "to", "color": "rgba(6.071428571428571, 0, 248.92857142857142, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 2.0", "to": "Wandsworth Medical Centre", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 1.0", "to": "Broomwood Health Centre", "width": 1}, {"TOT_MESSAGES": 4.0, "arrows": "to", "color": "rgba(18.21428571428571, 0, 236.7857142857143, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 4.0", "to": "Waverley PMS", "width": 1}, {"TOT_MESSAGES": 7.0, "arrows": "to", "color": "rgba(36.42857142857142, 0, 218.57142857142858, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 7.0", "to": "New Eltham \u0026 Blackfen Medical Centre", "width": 1}, {"TOT_MESSAGES": 6.0, "arrows": "to", "color": "rgba(30.357142857142854, 0, 224.64285714285714, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 6.0", "to": "Park Group Practice", "width": 1}, {"TOT_MESSAGES": 6.0, "arrows": "to", "color": "rgba(30.357142857142854, 0, 224.64285714285714, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 6.0", "to": "Mostafa Pms", "width": 1}, {"TOT_MESSAGES": 5.0, "arrows": "to", "color": "rgba(24.285714285714285, 0, 230.71428571428572, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 5.0", "to": "Dysart Surgery", "width": 1}, {"TOT_MESSAGES": 4.0, "arrows": "to", "color": "rgba(18.21428571428571, 0, 236.7857142857143, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 4.0", "to": "Bursted Wood Surgery", "width": 1}, {"TOT_MESSAGES": 4.0, "arrows": "to", "color": "rgba(18.21428571428571, 0, 236.7857142857143, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 4.0", "to": "Nightingale Surgery", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 1.0", "to": "Ingleton Avenue Surgery", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 1.0", "to": "Putneymead Group Medical Practice", "width": 1}, {"TOT_MESSAGES": 3.0, "arrows": "to", "color": "rgba(12.142857142857142, 0, 242.85714285714283, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 3.0", "to": "The Chislehurst Partnership", "width": 1}, {"TOT_MESSAGES": 2.0, "arrows": "to", "color": "rgba(6.071428571428571, 0, 248.92857142857142, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 2.0", "to": "Thornton Heath Medical Practice", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 1.0", "to": "Modality Lewisham", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 1.0", "to": "Sundridge Medical Practice", "width": 1}, {"TOT_MESSAGES": 6.0, "arrows": "to", "color": "rgba(30.357142857142854, 0, 224.64285714285714, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 6.0", "to": "Ballater Surgery", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 1.0", "to": "Derry Downs Surgery", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 1.0", "to": "Salford Medical Centre", "width": 1}, {"TOT_MESSAGES": 6.0, "arrows": "to", "color": "rgba(30.357142857142854, 0, 224.64285714285714, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 6.0", "to": "Thamesmead Health Centre", "width": 1}, {"TOT_MESSAGES": 2.0, "arrows": "to", "color": "rgba(6.071428571428571, 0, 248.92857142857142, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 2.0", "to": "Swanscombe Health Centre", "width": 1}, {"TOT_MESSAGES": 3.0, "arrows": "to", "color": "rgba(12.142857142857142, 0, 242.85714285714283, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 3.0", "to": "Forge Close Surgery", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 1.0", "to": "Ashdown Medical Group", "width": 1}, {"TOT_MESSAGES": 27.0, "arrows": "to", "color": "rgba(157.85714285714286, 0, 97.14285714285714, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 27.0", "to": "Burney Street Pms", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 1.0", "to": "Ico", "width": 1}, {"TOT_MESSAGES": 8.0, "arrows": "to", "color": "rgba(42.5, 0, 212.5, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 8.0", "to": "Belvedere Medical Centre", "width": 1}, {"TOT_MESSAGES": 14.0, "arrows": "to", "color": "rgba(78.92857142857143, 0, 176.07142857142856, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 14.0", "to": "Plumstead H/C PMS", "width": 1}, {"TOT_MESSAGES": 9.0, "arrows": "to", "color": "rgba(48.57142857142857, 0, 206.42857142857144, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 9.0", "to": "Riverside Surgery", "width": 1}, {"TOT_MESSAGES": 28.0, "arrows": "to", "color": "rgba(163.92857142857144, 0, 91.07142857142856, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 28.0", "to": "Eltham Medical Practice", "width": 1}, {"TOT_MESSAGES": 8.0, "arrows": "to", "color": "rgba(42.5, 0, 212.5, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 8.0", "to": "Blackheath Standard PMS", "width": 1}, {"TOT_MESSAGES": 2.0, "arrows": "to", "color": "rgba(6.071428571428571, 0, 248.92857142857142, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 2.0", "to": "Station Road Surgery", "width": 1}, {"TOT_MESSAGES": 4.0, "arrows": "to", "color": "rgba(18.21428571428571, 0, 236.7857142857143, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 4.0", "to": "Knoll Medical Practice", "width": 1}, {"TOT_MESSAGES": 2.0, "arrows": "to", "color": "rgba(6.071428571428571, 0, 248.92857142857142, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 2.0", "to": "Highland Medical Practice", "width": 1}, {"TOT_MESSAGES": 3.0, "arrows": "to", "color": "rgba(12.142857142857142, 0, 242.85714285714283, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 3.0", "to": "Bexley Medical Group", "width": 1}, {"TOT_MESSAGES": 43.0, "arrows": "to", "color": "rgba(255.0, 0, 0.0, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 43.0", "to": "Fairfield PMS", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "OXLEAS NHS FOUNDATION TRUST", "title": "Messages: 1.0", "to": "The Station Practice", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "SAXON WARRIOR PHARMACY", "title": "Messages: 1.0", "to": "Bower Mount Medical Practice", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "SAXON WARRIOR PHARMACY", "title": "Messages: 1.0", "to": "Vanbrugh Group Practice", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "SAXON WARRIOR PHARMACY", "title": "Messages: 1.0", "to": "Len Valley Practice", "width": 1}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "forceAtlas2Based": {
+            "avoidOverlap": 0,
+            "centralGravity": 0.01,
+            "damping": 0.4,
+            "gravitationalConstant": -50,
+            "springConstant": 0.08,
+            "springLength": 100
+        },
+        "solver": "forceAtlas2Based",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+                      network.on("stabilizationProgress", function(params) {
+                          document.getElementById('loadingBar').removeAttribute("style");
+                          var maxWidth = 496;
+                          var minWidth = 20;
+                          var widthFactor = params.iterations/params.total;
+                          var width = Math.max(minWidth,maxWidth * widthFactor);
+                          document.getElementById('bar').style.width = width + 'px';
+                          document.getElementById('text').innerHTML = Math.round(widthFactor*100) + '%';
+                      });
+                      network.once("stabilizationIterationsDone", function() {
+                          document.getElementById('text').innerHTML = '100%';
+                          document.getElementById('bar').style.width = '496px';
+                          document.getElementById('loadingBar').style.opacity = 0;
+                          // really clean the dom element
+                          setTimeout(function () {document.getElementById('loadingBar').style.display = 'none';}, 500);
+                      });
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

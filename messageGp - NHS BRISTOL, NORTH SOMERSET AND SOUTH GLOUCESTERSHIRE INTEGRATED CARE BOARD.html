@@ -1,0 +1,164 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 600px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body><h1 style='text-align:center;'>MessageGp - NHS BRISTOL, NORTH SOMERSET AND SOUTH GLOUCESTERSHIRE INTEGRATED CARE BOARD</h1>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "green", "id": "BEDMINSTER PHARMACY", "label": "", "shape": "dot", "size": 13, "title": "BEDMINSTER PHARMACY"}, {"color": "orange", "id": "Kennedy Way Surgery", "label": "", "shape": "dot", "size": 5, "title": "Kennedy Way Surgery"}, {"color": "orange", "id": "Bedminster Family Practice", "label": "", "shape": "dot", "size": 5, "title": "Bedminster Family Practice"}, {"color": "green", "id": "PILLTIME", "label": "", "shape": "dot", "size": 141, "title": "PILLTIME"}, {"color": "orange", "id": "Living Well Partnership", "label": "", "shape": "dot", "size": 5, "title": "Living Well Partnership"}, {"color": "orange", "id": "Pelham Medical Practice", "label": "", "shape": "dot", "size": 5, "title": "Pelham Medical Practice"}, {"color": "orange", "id": "High Glades Medical Centre", "label": "", "shape": "dot", "size": 5, "title": "High Glades Medical Centre"}, {"color": "orange", "id": "Parkwood Family Practice", "label": "", "shape": "dot", "size": 5, "title": "Parkwood Family Practice"}, {"color": "orange", "id": "Malling Health Four", "label": "", "shape": "dot", "size": 5, "title": "Malling Health Four"}, {"color": "orange", "id": "Dr Maassarani \u0026 Partners", "label": "", "shape": "dot", "size": 5, "title": "Dr Maassarani \u0026 Partners"}, {"color": "orange", "id": "The Limes", "label": "", "shape": "dot", "size": 5, "title": "The Limes"}, {"color": "orange", "id": "St Andrew\u0027s Medical Practice", "label": "", "shape": "dot", "size": 5, "title": "St Andrew\u0027s Medical Practice"}, {"color": "orange", "id": "The Westgate Practice", "label": "", "shape": "dot", "size": 5, "title": "The Westgate Practice"}, {"color": "orange", "id": "The Atherstone Surgery", "label": "", "shape": "dot", "size": 5, "title": "The Atherstone Surgery"}, {"color": "orange", "id": "Measham Medical Unit", "label": "", "shape": "dot", "size": 5, "title": "Measham Medical Unit"}, {"color": "orange", "id": "Huddersfield Road Surgery", "label": "", "shape": "dot", "size": 5, "title": "Huddersfield Road Surgery"}, {"color": "orange", "id": "Shirland Medical", "label": "", "shape": "dot", "size": 5, "title": "Shirland Medical"}, {"color": "orange", "id": "Eden Medical Group", "label": "", "shape": "dot", "size": 5, "title": "Eden Medical Group"}, {"color": "orange", "id": "St Paul\u0027s Cottage Practice", "label": "", "shape": "dot", "size": 5, "title": "St Paul\u0027s Cottage Practice"}, {"color": "orange", "id": "Mill Road Surgery", "label": "", "shape": "dot", "size": 5, "title": "Mill Road Surgery"}, {"color": "orange", "id": "Dr Baxter and Partners", "label": "", "shape": "dot", "size": 5, "title": "Dr Baxter and Partners"}, {"color": "orange", "id": "Wells City Practice", "label": "", "shape": "dot", "size": 5, "title": "Wells City Practice"}, {"color": "orange", "id": "The Fishponds Family Practice", "label": "", "shape": "dot", "size": 5, "title": "The Fishponds Family Practice"}, {"color": "orange", "id": "Portsdown Group Practice", "label": "", "shape": "dot", "size": 5, "title": "Portsdown Group Practice"}, {"color": "orange", "id": "The Meadows Surgery", "label": "", "shape": "dot", "size": 5, "title": "The Meadows Surgery"}, {"color": "orange", "id": "St. Peter\u0027s Health Centre", "label": "", "shape": "dot", "size": 5, "title": "St. Peter\u0027s Health Centre"}, {"color": "orange", "id": "St Austell Healthcare", "label": "", "shape": "dot", "size": 5, "title": "St Austell Healthcare"}, {"color": "orange", "id": "Wolstanton Medical Centre", "label": "", "shape": "dot", "size": 5, "title": "Wolstanton Medical Centre"}, {"color": "orange", "id": "Long Sutton Medical Ctr.", "label": "", "shape": "dot", "size": 5, "title": "Long Sutton Medical Ctr."}, {"color": "orange", "id": "St James Surgery", "label": "", "shape": "dot", "size": 5, "title": "St James Surgery"}, {"color": "orange", "id": "Green Street Green Medical Centre", "label": "", "shape": "dot", "size": 5, "title": "Green Street Green Medical Centre"}, {"color": "orange", "id": "Sandgate Road", "label": "", "shape": "dot", "size": 5, "title": "Sandgate Road"}, {"color": "orange", "id": "Portslade Health Centre", "label": "", "shape": "dot", "size": 5, "title": "Portslade Health Centre"}, {"color": "orange", "id": "Aspatria Medical Group", "label": "", "shape": "dot", "size": 5, "title": "Aspatria Medical Group"}, {"color": "orange", "id": "Cleckheaton Group Practice", "label": "", "shape": "dot", "size": 5, "title": "Cleckheaton Group Practice"}, {"color": "orange", "id": "Central Surgery", "label": "", "shape": "dot", "size": 5, "title": "Central Surgery"}, {"color": "orange", "id": "Robert Frew Medical Centre", "label": "", "shape": "dot", "size": 5, "title": "Robert Frew Medical Centre"}, {"color": "orange", "id": "Lofthouse Surgery", "label": "", "shape": "dot", "size": 5, "title": "Lofthouse Surgery"}, {"color": "green", "id": "WELL", "label": "", "shape": "dot", "size": 13, "title": "WELL"}, {"color": "orange", "id": "Mendip Vale Medical Practice", "label": "", "shape": "dot", "size": 5, "title": "Mendip Vale Medical Practice"}, {"color": "orange", "id": "Clevedon Medical Centre", "label": "", "shape": "dot", "size": 5, "title": "Clevedon Medical Centre"}]);
+                  edges = new vis.DataSet([{"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "BEDMINSTER PHARMACY", "title": "Messages: 1.0", "to": "Kennedy Way Surgery", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "BEDMINSTER PHARMACY", "title": "Messages: 1.0", "to": "Bedminster Family Practice", "width": 1}, {"TOT_MESSAGES": 2.0, "arrows": "to", "color": "rgba(11.08695652173913, 0, 243.91304347826087, 0.7)", "from": "PILLTIME", "title": "Messages: 2.0", "to": "Living Well Partnership", "width": 1}, {"TOT_MESSAGES": 2.0, "arrows": "to", "color": "rgba(11.08695652173913, 0, 243.91304347826087, 0.7)", "from": "PILLTIME", "title": "Messages: 2.0", "to": "Pelham Medical Practice", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "PILLTIME", "title": "Messages: 1.0", "to": "High Glades Medical Centre", "width": 1}, {"TOT_MESSAGES": 2.0, "arrows": "to", "color": "rgba(11.08695652173913, 0, 243.91304347826087, 0.7)", "from": "PILLTIME", "title": "Messages: 2.0", "to": "Parkwood Family Practice", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "PILLTIME", "title": "Messages: 1.0", "to": "Malling Health Four", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "PILLTIME", "title": "Messages: 1.0", "to": "Dr Maassarani \u0026 Partners", "width": 1}, {"TOT_MESSAGES": 2.0, "arrows": "to", "color": "rgba(11.08695652173913, 0, 243.91304347826087, 0.7)", "from": "PILLTIME", "title": "Messages: 2.0", "to": "The Limes", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "PILLTIME", "title": "Messages: 1.0", "to": "St Andrew\u0027s Medical Practice", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "PILLTIME", "title": "Messages: 1.0", "to": "The Westgate Practice", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "PILLTIME", "title": "Messages: 1.0", "to": "The Atherstone Surgery", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "PILLTIME", "title": "Messages: 1.0", "to": "Measham Medical Unit", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "PILLTIME", "title": "Messages: 1.0", "to": "Huddersfield Road Surgery", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "PILLTIME", "title": "Messages: 1.0", "to": "Shirland Medical", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "PILLTIME", "title": "Messages: 1.0", "to": "Eden Medical Group", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "PILLTIME", "title": "Messages: 1.0", "to": "St Paul\u0027s Cottage Practice", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "PILLTIME", "title": "Messages: 1.0", "to": "Mill Road Surgery", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "PILLTIME", "title": "Messages: 1.0", "to": "Dr Baxter and Partners", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "PILLTIME", "title": "Messages: 1.0", "to": "Wells City Practice", "width": 1}, {"TOT_MESSAGES": 2.0, "arrows": "to", "color": "rgba(11.08695652173913, 0, 243.91304347826087, 0.7)", "from": "PILLTIME", "title": "Messages: 2.0", "to": "The Fishponds Family Practice", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "PILLTIME", "title": "Messages: 1.0", "to": "Portsdown Group Practice", "width": 1}, {"TOT_MESSAGES": 2.0, "arrows": "to", "color": "rgba(11.08695652173913, 0, 243.91304347826087, 0.7)", "from": "PILLTIME", "title": "Messages: 2.0", "to": "The Meadows Surgery", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "PILLTIME", "title": "Messages: 1.0", "to": "St. Peter\u0027s Health Centre", "width": 1}, {"TOT_MESSAGES": 2.0, "arrows": "to", "color": "rgba(11.08695652173913, 0, 243.91304347826087, 0.7)", "from": "PILLTIME", "title": "Messages: 2.0", "to": "St Austell Healthcare", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "PILLTIME", "title": "Messages: 1.0", "to": "Wolstanton Medical Centre", "width": 1}, {"TOT_MESSAGES": 2.0, "arrows": "to", "color": "rgba(11.08695652173913, 0, 243.91304347826087, 0.7)", "from": "PILLTIME", "title": "Messages: 2.0", "to": "Long Sutton Medical Ctr.", "width": 1}, {"TOT_MESSAGES": 2.0, "arrows": "to", "color": "rgba(11.08695652173913, 0, 243.91304347826087, 0.7)", "from": "PILLTIME", "title": "Messages: 2.0", "to": "St James Surgery", "width": 1}, {"TOT_MESSAGES": 2.0, "arrows": "to", "color": "rgba(11.08695652173913, 0, 243.91304347826087, 0.7)", "from": "PILLTIME", "title": "Messages: 2.0", "to": "Green Street Green Medical Centre", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "PILLTIME", "title": "Messages: 1.0", "to": "Sandgate Road", "width": 1}, {"TOT_MESSAGES": 2.0, "arrows": "to", "color": "rgba(11.08695652173913, 0, 243.91304347826087, 0.7)", "from": "PILLTIME", "title": "Messages: 2.0", "to": "Portslade Health Centre", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "PILLTIME", "title": "Messages: 1.0", "to": "Aspatria Medical Group", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "PILLTIME", "title": "Messages: 1.0", "to": "Cleckheaton Group Practice", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "PILLTIME", "title": "Messages: 1.0", "to": "Central Surgery", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "PILLTIME", "title": "Messages: 1.0", "to": "Robert Frew Medical Centre", "width": 1}, {"TOT_MESSAGES": 1.0, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "PILLTIME", "title": "Messages: 1.0", "to": "Lofthouse Surgery", "width": 1}, {"TOT_MESSAGES": 24.0, "arrows": "to", "color": "rgba(255.0, 0, 0.0, 0.7)", "from": "WELL", "title": "Messages: 24.0", "to": "Mendip Vale Medical Practice", "width": 1}, {"TOT_MESSAGES": 3.0, "arrows": "to", "color": "rgba(22.17391304347826, 0, 232.82608695652175, 0.7)", "from": "WELL", "title": "Messages: 3.0", "to": "Clevedon Medical Centre", "width": 1}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "forceAtlas2Based": {
+            "avoidOverlap": 0,
+            "centralGravity": 0.01,
+            "damping": 0.4,
+            "gravitationalConstant": -50,
+            "springConstant": 0.08,
+            "springLength": 100
+        },
+        "solver": "forceAtlas2Based",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
