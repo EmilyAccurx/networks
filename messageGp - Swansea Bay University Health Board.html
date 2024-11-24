@@ -88,8 +88,8 @@
                   
 
                   // parsing and collecting nodes and edges from the python
-                  nodes = new vis.DataSet([]);
-                  edges = new vis.DataSet([]);
+                  nodes = new vis.DataSet([{"color": "green", "id": "CITYWIDE-PARKERS \u0026 HUNTINGTON PHARMACY", "label": "", "shape": "dot", "size": 9, "title": "CITYWIDE-PARKERS \u0026 HUNTINGTON PHARMACY"}, {"color": "orange", "id": "Haxby Group Practice", "label": "", "shape": "dot", "size": 5, "title": "Haxby Group Practice"}, {"color": "green", "id": "MONKBAR PHARMACY", "label": "", "shape": "dot", "size": 13, "title": "MONKBAR PHARMACY"}, {"color": "orange", "id": "Becontree Medical Centre", "label": "", "shape": "dot", "size": 5, "title": "Becontree Medical Centre"}, {"color": "orange", "id": "Priory Medical Group", "label": "", "shape": "dot", "size": 5, "title": "Priory Medical Group"}]);
+                  edges = new vis.DataSet([{"TOT_MESSAGES": 3, "arrows": "to", "color": "rgba(255.0, 0, 0.0, 0.7)", "from": "CITYWIDE-PARKERS \u0026 HUNTINGTON PHARMACY", "title": "Messages: 3", "to": "Haxby Group Practice", "width": 1}, {"TOT_MESSAGES": 1, "arrows": "to", "color": "rgba(0.0, 0, 255.0, 0.7)", "from": "MONKBAR PHARMACY", "title": "Messages: 1", "to": "Becontree Medical Centre", "width": 1}, {"TOT_MESSAGES": 2, "arrows": "to", "color": "rgba(127.5, 0, 127.5, 0.7)", "from": "MONKBAR PHARMACY", "title": "Messages: 2", "to": "Priory Medical Group", "width": 1}]);
 
                   nodeColors = {};
                   allNodes = nodes.get({ returnType: "Object" });
